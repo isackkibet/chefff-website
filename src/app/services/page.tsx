@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { CheckCircle, ArrowRight, Tag } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/Button'
 import SectionHeader from '@/components/ui/SectionHeader'
+import AddToCartButton from '@/components/cart/AddToCartButton'
 import { services } from '@/lib/data'
 
 export const metadata: Metadata = {
@@ -148,6 +149,11 @@ export default function ServicesPage() {
                       <ButtonLink href={`/services/${s.slug}`} variant="outline" size="sm">
                         Details
                       </ButtonLink>
+                    </div>
+                    <div className="mt-3">
+                      <AddToCartButton
+                        item={{ id: s.slug, name: s.title, price: s.price ?? 0, image: s.image }}
+                      />
                     </div>
                   </div>
                 </article>

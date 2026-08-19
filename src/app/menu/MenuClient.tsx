@@ -6,6 +6,7 @@ import { ChefHat, Leaf, Sprout, Wheat, Milk, Nut, Flame, Info } from 'lucide-rea
 import Badge from '@/components/ui/Badge'
 import Modal from '@/components/ui/Modal'
 import { ButtonLink } from '@/components/ui/Button'
+import AddToCartButton from '@/components/cart/AddToCartButton'
 import { menuItems, type MenuItem, type DietaryTag } from '@/lib/data'
 
 type Category = 'All' | MenuItem['category']
@@ -137,6 +138,11 @@ export default function MenuClient() {
                     >
                       <Info size={13} aria-hidden="true" /> Details
                     </button>
+                  </div>
+                  <div className="mt-3">
+                    <AddToCartButton
+                      item={{ id: dish.id, name: dish.name, price: dish.price, image: dish.image }}
+                    />
                   </div>
                 </div>
               </article>

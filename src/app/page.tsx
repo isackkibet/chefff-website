@@ -5,6 +5,7 @@ import { ArrowRight, Star, ChevronRight } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/Button'
 import SectionHeader from '@/components/ui/SectionHeader'
 import StarRating from '@/components/ui/StarRating'
+import HeroBackground from '@/components/ui/HeroBackground'
 import { brand, stats, services, menuItems, testimonials } from '@/lib/data'
 
 export const metadata: Metadata = {
@@ -21,21 +22,12 @@ export default function HomePage() {
     <>
       {/* ── Hero ────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden" aria-label="Hero">
-        <Image
-          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=85"
-          alt="Elegant private dining table set by Chef Harrizona"
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
-        <div className="hero-overlay absolute inset-0" aria-hidden="true" />
-
+        <HeroBackground />
         <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
           <p className="animate-fade-up mb-4 text-sm sm:text-base font-semibold uppercase tracking-[0.25em] text-[hsl(45_90%_52%)]">
             {brand.tagline}
           </p>
-          <h1 className="animate-fade-up delay-100 text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+          <h1 className="animate-fade-up delay-100 text-[2.5rem] leading-tight sm:text-6xl lg:text-7xl font-bold mb-6">
             Private Dining<br />
             <span className="text-gold-gradient">Crafted For You</span>
           </h1>

@@ -7,10 +7,33 @@ import AdminGuard from '@/components/admin/AdminGuard'
 import BookingStatusBadge from '@/components/admin/BookingStatusBadge'
 import Modal from '@/components/ui/Modal'
 import Button from '@/components/ui/Button'
-import { adminStore, type Booking, type BookingStatus } from '@/lib/admin/store'
+import { type Booking, type BookingStatus } from '@/lib/admin/store'
 import { useToast } from '@/components/ui/ToastProvider'
 
 const ALL_STATUSES: BookingStatus[] = ['PENDING', 'REVIEWING', 'QUOTED', 'CONFIRMED', 'CANCELLED', 'COMPLETED']
+
+function mapBooking(row: Record<string, unknown>): Booking {
+  return {
+    id: String(row.id),
+    refNumber: String(row.refNumber),
+    fullName: String(row.fullName),
+    email: String(row.email),
+    phone: String(row.phone),
+    eventType: String(row.eventType),
+    eventDate: String(row.eventDate),
+    preferredTime: String(row.preferredTime),
+    guestCount: Number(row.guestCount),
+    location: String(row.location),
+    budgetRange: row.budgetRange ? String(row.budgetRange) : undefined,
+    cuisinePrefs: row.cuisinePrefs ? String(row.cuisinePrefs) : undefined,
+    dietaryReqs: row.dietaryReqs ? String(row.dietaryReqs) : undefined,
+    specialRequests: row.specialRequests ? String(row.specialRequests) : undefined,
+    status: row.status as BookingStatus,
+    createdAt: String(row.createdAt),
+    notes: row.notes ? String(row.notes) : undefined,
+    quotedAmount: row.quotedAmount ? Number(row.quotedAmount) : undefined,
+  }
+}
 
 export default function AdminBookingsPage() {
   const { toast } = useToast()
@@ -21,7 +44,18 @@ export default function AdminBookingsPage() {
   const [noteText, setNoteText] = useState('')
   const [quoteAmount, setQuoteAmount] = useState('')
 
-  useEffect(() => { setBookings([...adminStore.bookings]) }, [])
+  useEffect(() => { loadBookings() }, [])
+
+  async function loadBookings() {
+    try {
+      const res = await fetch('/api/admin/bookings')
+      if (!res.ok) throw new Error('Failed to load bookings')
+      const rows = await res.json()
+      setBookings(rows.map(mapBooking))
+    } catch {
+      toast('error', 'Could not load bookings')
+    }
+  }
 
   const filtered = bookings.filter((b) => {
     const matchStatus = filter === 'ALL' || b.status === filter
@@ -30,31 +64,50 @@ export default function AdminBookingsPage() {
     return matchStatus && matchSearch
   })
 
-  function refresh() { setBookings([...adminStore.bookings]) }
-
-  function updateStatus(id: string, status: BookingStatus) {
-    adminStore.updateBookingStatus(id, status)
-    refresh()
-    toast('success', `Booking status updated to ${status}`)
-    if (selected?.id === id) setSelected((prev) => prev ? { ...prev, status } : null)
+  async function patchBooking(id: string, updates: { status?: BookingStatus; notes?: string; quotedAmount?: number }) {
+    const res = await fetch('/api/admin/bookings', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: Number(id), ...updates }),
+    })
+    if (!res.ok) throw new Error('Failed to update booking')
   }
 
-  function saveNote() {
+  async function updateStatus(id: string, status: BookingStatus) {
+    try {
+      await patchBooking(id, { status })
+      await loadBookings()
+      toast('success', `Booking status updated to ${status}`)
+      if (selected?.id === id) setSelected((prev) => prev ? { ...prev, status } : null)
+    } catch {
+      toast('error', 'Could not update booking')
+    }
+  }
+
+  async function saveNote() {
     if (!selected) return
-    adminStore.updateBookingNotes(selected.id, noteText)
-    refresh()
-    toast('success', 'Notes saved')
+    try {
+      await patchBooking(selected.id, { notes: noteText })
+      await loadBookings()
+      toast('success', 'Notes saved')
+    } catch {
+      toast('error', 'Could not save notes')
+    }
   }
 
-  function saveQuote() {
+  async function saveQuote() {
     if (!selected || !quoteAmount) return
-    const amount = parseFloat(quoteAmount)
+    const amount = Math.round(parseFloat(quoteAmount))
     if (isNaN(amount) || amount <= 0) { toast('error', 'Enter a valid amount'); return }
-    adminStore.updateBookingQuote(selected.id, amount)
-    refresh()
-    toast('success', `Quote of KES ${amount.toLocaleString()} sent`)
-    setSelected((prev) => prev ? { ...prev, quotedAmount: amount, status: 'QUOTED' } : null)
-    setQuoteAmount('')
+    try {
+      await patchBooking(selected.id, { quotedAmount: amount })
+      await loadBookings()
+      toast('success', `Quote of KES ${amount.toLocaleString()} sent`)
+      setSelected((prev) => prev ? { ...prev, quotedAmount: amount, status: 'QUOTED' } : null)
+      setQuoteAmount('')
+    } catch {
+      toast('error', 'Could not send quote')
+    }
   }
 
   function openDetail(b: Booking) {

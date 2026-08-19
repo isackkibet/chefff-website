@@ -1,7 +1,6 @@
 'use client'
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import type { MealKit } from '@/lib/data'
 
 export interface CartItem {
   id: string
@@ -11,12 +10,15 @@ export interface CartItem {
   qty: number
 }
 
+/** Any item that can be placed in the cart (meal kit, dish, service). */
+export type CartableItem = Pick<CartItem, 'id' | 'name' | 'price' | 'image'>
+
 interface CartContextValue {
   items: CartItem[]
   count: number
   total: number
   getQty: (id: string) => number
-  addItem: (kit: MealKit, qty?: number) => void
+  addItem: (item: CartableItem, qty?: number) => void
   removeItem: (id: string) => void
   updateQty: (id: string, qty: number) => void
   clearCart: () => void
@@ -58,13 +60,13 @@ export default function CartProvider({ children }: { children: React.ReactNode }
     }
   }, [items])
 
-  const addItem = useCallback((kit: MealKit, qty = 1) => {
+  const addItem = useCallback((item: CartableItem, qty = 1) => {
     setItems((prev) => {
-      const existing = prev.find((i) => i.id === kit.id)
+      const existing = prev.find((i) => i.id === item.id)
       if (existing) {
-        return prev.map((i) => (i.id === kit.id ? { ...i, qty: i.qty + qty } : i))
+        return prev.map((i) => (i.id === item.id ? { ...i, qty: i.qty + qty } : i))
       }
-      return [...prev, { id: kit.id, name: kit.name, price: kit.price, image: kit.image, qty }]
+      return [...prev, { id: item.id, name: item.name, price: item.price, image: item.image, qty }]
     })
   }, [])
 

@@ -25,6 +25,7 @@ type FormData = z.infer<typeof schema>
 export default function ContactClient() {
   const { toast } = useToast()
   const [submitted, setSubmitted] = useState(false)
+  const [submittedName, setSubmittedName] = useState('')
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<FormData>({
@@ -45,6 +46,7 @@ export default function ContactClient() {
     }
 
     setSubmitted(true)
+    setSubmittedName(data.name.split(' ')[0])
     reset()
     toast('success', "Your message has been sent. We'll be in touch shortly.")
   }
@@ -151,8 +153,10 @@ export default function ContactClient() {
             {submitted ? (
               <div className="py-12 text-center animate-fade-in">
                 <CheckCircle size={48} className="text-[hsl(142_71%_45%)] mx-auto mb-4" aria-hidden="true" />
-                <h3 className="text-xl font-semibold mb-2">Message Sent!</h3>
-                <p className="text-[hsl(0_0%_55%)]">We'll get back to you within 24 hours.</p>
+                <h3 className="text-xl font-semibold mb-2">Asante{submittedName ? `, ${submittedName}` : ''}! Message Received</h3>
+                <p className="text-[hsl(0_0%_55%)] max-w-sm mx-auto">
+                  Chef Harrizona has received your message and will reply to you personally within 24 hours. Karibu sana!
+                </p>
                 <button onClick={() => setSubmitted(false)} className="mt-6 text-sm text-[hsl(45_90%_52%)] hover:underline">
                   Send another message
                 </button>

@@ -99,7 +99,7 @@ export default function MealKitsSection() {
                       <span className="text-xl font-bold text-[hsl(45_90%_52%)]">KSh {kit.price.toLocaleString()}</span>
                       <span className="text-sm text-[hsl(0_0%_40%)] line-through">KSh {kit.originalPrice.toLocaleString()}</span>
                     </div>
-                    <AddToCartButton kit={kit} />
+                    <AddToCartButton item={kit} />
                   </div>
                 </div>
               </article>

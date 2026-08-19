@@ -10,16 +10,22 @@ export default function CartDrawer() {
 
   if (!isOpen) return null
 
+const origin = typeof window !== 'undefined' ? window.location.origin : ''
+  const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  const absoluteImage = (src: string) => (src.startsWith('http') ? src : `${origin}${src}`)
+
   const orderMessage = [
-    `👨‍🍳 *ORDER — ${brand.name}*`,
+    '👨🍳 *ORDER — Chef Harrizona*',
     '',
-    ...items.flatMap((i) => [
-      `📦 *${i.name}*`,
-      `🖼️ ${i.image}`,
-      `  ✖ ${i.qty} × KSh ${i.price.toLocaleString()}`,
-      `  = *KSh ${(i.price * i.qty).toLocaleString()}*`,
-      '──────────────',
-    ]),
+    ...items.flatMap((i, idx) => {
+      const lines = [
+        `*${idx + 1}. ${i.name}*`,
+        `Qty: ${i.qty} × KSh ${i.price.toLocaleString()}`,
+        `Subtotal: *KSh ${(i.price * i.qty).toLocaleString()}*`,
+      ]
+      if (!isLocal) lines.push(`Picture: ${absoluteImage(i.image)}`)
+      return [...lines, '']
+    }),
     `💰 *TOTAL: KSh ${total.toLocaleString()}*`,
     '',
     '🚚 Free delivery in Nairobi',
@@ -66,7 +72,7 @@ export default function CartDrawer() {
               <ShoppingCart size={28} aria-hidden="true" />
             </div>
             <p className="font-semibold text-[hsl(42_30%_94%)]">Your cart is empty</p>
-            <p className="text-sm text-[hsl(0_0%_50%)]">Browse our authentic Kenyan meal kits and add your favourites.</p>
+            <p className="text-sm text-[hsl(0_0%_50%)]">Add meal kits, dishes or services and place your order on WhatsApp.</p>
             <button
               onClick={closeCart}
               className="mt-2 rounded-full bg-[hsl(45_90%_52%)] px-5 py-2.5 text-sm font-semibold text-[hsl(0_0%_10%)] hover:bg-[hsl(45_90%_58%)] transition-colors"

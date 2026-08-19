@@ -59,6 +59,7 @@ export default function BookingClient() {
   const { toast } = useToast()
   const [submitted, setSubmitted] = useState(false)
   const [bookingId, setBookingId] = useState<string | null>(null)
+  const [guestName, setGuestName] = useState('')
 
   const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<FormData>({
     resolver: zodResolver(schema) as Resolver<FormData>,
@@ -78,6 +79,7 @@ export default function BookingClient() {
     }
 
     setBookingId(result.refNumber)
+    setGuestName(data.fullName.split(' ')[0])
     setSubmitted(true)
     reset()
     toast('success', `Booking request ${result.refNumber} received!`)
@@ -90,9 +92,9 @@ export default function BookingClient() {
           <div className="inline-flex size-20 items-center justify-center rounded-full bg-[hsl(142_71%_45%/0.15)] mb-6">
             <CheckCircle size={40} className="text-[hsl(142_71%_45%)]" aria-hidden="true" />
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Request Received!</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Asante{guestName ? `, ${guestName}` : ''}! Request Received</h2>
           <p className="text-[hsl(0_0%_55%)] mb-8">
-            Your booking request has been received. Chef Harrizona will review the details and get back to you within 24 hours.
+            Your booking request is safely with Chef Harrizona. He will personally review the details and get back to you within 24 hours. Karibu sana!
           </p>
 
           {/* Booking reference */}
