@@ -32,7 +32,7 @@ export function credentialsAreValid(email: string, password: string) {
   if (!configuredEmail || !configuredPassword) return false
 
   return safeEqual(email.trim().toLowerCase(), configuredEmail.trim().toLowerCase())
-    && safeEqual(password, configuredPassword)
+    && safeEqual(password.trim(), configuredPassword.trim())
 }
 
 export function createAdminSession(email: string) {
