@@ -7,16 +7,43 @@ import SectionHeader from '@/components/ui/SectionHeader'
 import StarRating from '@/components/ui/StarRating'
 import HeroBackground from '@/components/ui/HeroBackground'
 import { brand, stats, services, menuItems, testimonials } from '@/lib/data'
+import { ensureReviewsSchema, sql } from '@/lib/db'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Chef Harrizona | Private Dining, Catering & Culinary Experiences in Nairobi',
   description: brand.description,
 }
 
-export default function HomePage() {
+export default async function HomePage() {
   const featuredDishes = menuItems.filter((m) => m.chefPick).slice(0, 4)
-  const featuredTestimonials = testimonials.filter((t) => t.featured)
   const featuredServices = services.slice(0, 4)
+
+  let dbReviews: { id: string; name: string; service: string; rating: number; review: string }[] = []
+  try {
+    await ensureReviewsSchema()
+    dbReviews = await sql`
+      SELECT id, name, service, rating, review
+      FROM customer_reviews
+      WHERE approved = TRUE
+      ORDER BY created_at DESC
+      LIMIT 3
+    ` as typeof dbReviews
+  } catch (err) {
+    console.error('Failed to load reviews for homepage', err)
+  }
+
+  const featuredTestimonials = dbReviews.length > 0
+    ? dbReviews.map((r) => ({
+        id: r.id,
+        name: r.name,
+        role: 'Verified Guest',
+        rating: r.rating,
+        text: r.review,
+        service: r.service,
+      }))
+    : testimonials.filter((t) => t.featured)
 
   return (
     <>

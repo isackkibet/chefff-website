@@ -8,6 +8,8 @@ import ReviewForm from './ReviewForm'
 import { testimonials, stats } from '@/lib/data'
 import { ensureReviewsSchema, sql } from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: "Reviews | What Chef Harrizona's Guests Say",
   description: "Real testimonials from Chef Harrizona's guests — private dining, wedding catering, corporate events and cooking classes.",
