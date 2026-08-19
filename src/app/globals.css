@@ -45,9 +45,17 @@ html {
 /* Larger, easier-to-read text on phones */
 @media (max-width: 640px) {
   html {
-    font-size: 17.5px;
-    line-height: 1.68;
+    font-size: 17px;
+    line-height: 1.5;
   }
+
+  /* Tighten wide letter-spacing on small screens so words sit close together */
+  [class*="tracking-"] {
+    letter-spacing: 0.04em;
+  }
+
+  /* Keep headings tight and compact on phones */
+  h1 { letter-spacing: -0.01em; }
 }
 
 body {

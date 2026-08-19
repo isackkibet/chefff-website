@@ -11,7 +11,7 @@ export default function MealKitsPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8" aria-label="Meal kits header">
+      <section className="pt-24 pb-12 sm:pt-32 sm:pb-16 px-4 sm:px-6 lg:px-8" aria-label="Meal kits header">
         <div className="mx-auto max-w-7xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>

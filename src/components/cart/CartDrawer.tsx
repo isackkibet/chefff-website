@@ -12,20 +12,23 @@ export default function CartDrawer() {
 
 const origin = typeof window !== 'undefined' ? window.location.origin : ''
   const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  const absoluteImage = (src: string) => (src.startsWith('http') ? src : `${origin}${src}`)
+  const GITHUB_BASE = 'https://raw.githubusercontent.com/isackkibet/chefff-website/main/public'
+  const absoluteImage = (src: string) => {
+    if (src.startsWith('http')) return src
+    if (isLocal) return `${GITHUB_BASE}/${src.replace(/^\//, '')}`
+    return `${origin}${src}`
+  }
 
   const orderMessage = [
     '👨🍳 *ORDER — Chef Harrizona*',
     '',
-    ...items.flatMap((i, idx) => {
-      const lines = [
-        `*${idx + 1}. ${i.name}*`,
-        `Qty: ${i.qty} × KSh ${i.price.toLocaleString()}`,
-        `Subtotal: *KSh ${(i.price * i.qty).toLocaleString()}*`,
-      ]
-      if (!isLocal) lines.push(`Picture: ${absoluteImage(i.image)}`)
-      return [...lines, '']
-    }),
+    ...items.flatMap((i, idx) => [
+      `*${idx + 1}. ${i.name}*`,
+      `Qty: ${i.qty} × KSh ${i.price.toLocaleString()}`,
+      `Subtotal: *KSh ${(i.price * i.qty).toLocaleString()}*`,
+      `Picture: ${absoluteImage(i.image)}`,
+      '',
+    ]),
     `💰 *TOTAL: KSh ${total.toLocaleString()}*`,
     '',
     '🚚 Free delivery in Nairobi',

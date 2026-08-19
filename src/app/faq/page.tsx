@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function FAQPage() {
   return (
     <>
-      <section className="pt-32 pb-12 px-4 sm:px-6 lg:px-8 text-center" aria-label="FAQ header">
+      <section className="pt-24 pb-10 sm:pt-32 sm:pb-12 px-4 sm:px-6 lg:px-8 text-center" aria-label="FAQ header">
         <div className="mx-auto max-w-3xl">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[hsl(45_90%_52%)]">Got Questions?</p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">

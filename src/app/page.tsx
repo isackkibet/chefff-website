@@ -21,20 +21,20 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero ────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" aria-label="Hero">
+<section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden py-24" aria-label="Hero">
         <HeroBackground />
         <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
-          <p className="animate-fade-up mb-4 text-sm sm:text-base font-semibold uppercase tracking-[0.25em] text-[hsl(45_90%_52%)]">
+          <p className="animate-fade-up mb-3 sm:mb-4 text-xs sm:text-base font-semibold uppercase tracking-[0.25em] text-[hsl(45_90%_52%)]">
             {brand.tagline}
           </p>
-          <h1 className="animate-fade-up delay-100 text-[2.5rem] leading-tight sm:text-6xl lg:text-7xl font-bold mb-6">
+          <h1 className="animate-fade-up delay-100 text-[2.2rem] leading-tight sm:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6">
             Private Dining<br />
             <span className="text-gold-gradient">Crafted For You</span>
           </h1>
-          <p className="animate-fade-up delay-200 text-lg sm:text-xl text-[hsl(42_30%_85%)] max-w-2xl mx-auto mb-10 leading-relaxed">
-            𝑨 𝒔𝒌𝒊𝒍𝒍𝒆𝒅 𝒂𝒏𝒅 𝒅𝒆𝒕𝒆𝒓𝒎𝒊𝒏𝒆𝒅 𝒄𝒉𝒆𝒇 𝒅𝒆𝒅𝒊𝒄𝒂𝒕𝒆𝒅 𝒕𝒐 𝒇𝒖𝒍𝒍𝒇𝒊𝒍𝒍 𝒚𝒐𝒖𝒓 𝒄𝒖𝒍𝒊𝒏𝒂𝒓𝒚 𝒘𝒊𝒔𝒉𝒆𝒔, 𝒘𝒉𝒆𝒕𝒉𝒆𝒓 𝒊𝒕𝒔 𝒂𝒏 𝒐𝒖𝒕𝒅𝒐𝒐𝒓 𝒆𝒗𝒆𝒏𝒕 𝒐𝒓 𝒂𝒕 𝒕𝒉𝒆 𝒄𝒐𝒎𝒇𝒐𝒓𝒕 𝒐𝒇 𝒚𝒐𝒖𝒓 𝒉𝒐𝒎𝒆.
+          <p className="animate-fade-up delay-200 text-base sm:text-xl text-[hsl(42_30%_85%)] max-w-2xl mx-auto mb-6 sm:mb-10 leading-relaxed">
+            𝑨 𝒔𝒌𝒊𝒍𝒍𝒆𝒅 𝒂𝒏𝒅 𝒅𝒆𝒕𝒆𝒓𝒎𝒊𝒏𝒆𝒅 𝒄𝒉𝒆𝒇 𝒅𝒆𝒅𝒊𝒄𝒂𝒕𝒆𝒅 𝒕𝒐 𝒇𝒖𝒍𝒇𝒊𝒍𝒍 𝒚𝒐𝒖𝒓 𝒄𝒖𝒍𝒊𝒏𝒂𝒓𝒚 𝒘𝒊𝒔𝒉𝒆𝒔, 𝒘𝒉𝒆𝒕𝒉𝒆𝒓 𝒊𝒕𝒔 𝒂𝒏 𝒐𝒖𝒕𝒅𝒐𝒐𝒓 𝒆𝒗𝒆𝒏𝒕 𝒐𝒓 𝒂𝒕 𝒕𝒉𝒆 𝒄𝒐𝒎𝒇𝒐𝒓𝒕 𝒐𝒇 𝒚𝒐𝒖𝒓 𝒉𝒐𝒎𝒆.
           </p>
-          <div className="animate-fade-up delay-300 flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="animate-fade-up delay-300 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <ButtonLink href="/book" size="lg" variant="primary">
               Book a Private Experience
               <ArrowRight size={18} aria-hidden="true" />
@@ -45,7 +45,7 @@ export default function HomePage() {
           </div>
 
           {/* Social proof */}
-          <div className="animate-fade-up delay-400 mt-12 flex items-center justify-center gap-3">
+          <div className="animate-fade-up delay-400 mt-8 sm:mt-12 flex items-center justify-center gap-3">
             <div className="flex -space-x-2">
               {[
                 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=64&q=80',

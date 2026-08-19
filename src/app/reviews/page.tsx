@@ -6,18 +6,45 @@ import { ButtonLink } from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
 import ReviewForm from './ReviewForm'
 import { testimonials, stats } from '@/lib/data'
+import { ensureReviewsSchema, sql } from '@/lib/db'
 
 export const metadata: Metadata = {
   title: "Reviews | What Chef Harrizona's Guests Say",
   description: "Real testimonials from Chef Harrizona's guests — private dining, wedding catering, corporate events and cooking classes.",
 }
 
-export default function ReviewsPage() {
-  const avgRating = testimonials.reduce((sum, t) => sum + t.rating, 0) / testimonials.length
+export default async function ReviewsPage() {
+  let dbReviews: { id: string; name: string; service: string; rating: number; review: string; created_at: string }[] = []
+  try {
+    await ensureReviewsSchema()
+    dbReviews = await sql`
+      SELECT id, name, service, rating, review, created_at
+      FROM customer_reviews
+      WHERE approved = TRUE
+      ORDER BY created_at DESC
+    ` as typeof dbReviews
+  } catch (err) {
+    console.error('Failed to load reviews from database', err)
+  }
+
+  const displayReviews = dbReviews.length > 0
+    ? dbReviews.map((r) => ({
+        id: r.id,
+        name: r.name,
+        role: 'Verified Guest',
+        rating: r.rating,
+        text: r.review,
+        service: r.service,
+        date: new Date(r.created_at).toLocaleDateString('en-KE', { month: 'short', year: 'numeric' }),
+        featured: false,
+      }))
+    : testimonials
+
+  const avgRating = displayReviews.reduce((sum, t) => sum + t.rating, 0) / displayReviews.length
 
   return (
     <>
-      <section className="pt-32 pb-12 px-4 sm:px-6 lg:px-8 text-center" aria-label="Reviews header">
+      <section className="pt-24 pb-10 sm:pt-32 sm:pb-12 px-4 sm:px-6 lg:px-8 text-center" aria-label="Reviews header">
         <div className="mx-auto max-w-3xl">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[hsl(45_90%_52%)]">Guest Feedback</p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
@@ -29,7 +56,7 @@ export default function ReviewsPage() {
               <StarRating rating={5} size={28} />
               <span className="text-3xl font-display font-bold text-gold-gradient">{avgRating.toFixed(1)}/5</span>
             </div>
-            <p className="text-[hsl(0_0%_55%)]">Based on {testimonials.length} verified reviews</p>
+            <p className="text-[hsl(0_0%_55%)]">Based on {displayReviews.length} verified review{displayReviews.length !== 1 ? 's' : ''}</p>
           </div>
         </div>
       </section>
@@ -51,7 +78,7 @@ export default function ReviewsPage() {
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="Testimonials" title="What Our Guests Say" subtitle="These are real reviews from real guests. We never fabricate feedback." />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {testimonials.map((t) => (
+            {displayReviews.map((t) => (
               <blockquote
                 key={t.id}
                 className={`rounded-2xl border p-6 card-hover flex flex-col ${
