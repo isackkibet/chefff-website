@@ -8,6 +8,11 @@ import { galleryImages } from '@/lib/data'
 // then the dishes — people first keeps it personal and interactive.
 const heroSlides = [
   {
+    id: 'hero-corporate',
+    src: '/corporate-catering.jpeg',
+    alt: 'Elegant corporate catering buffet',
+  },
+  {
     id: 'hero-original',
     src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=85',
     alt: 'Elegant private dining table set by Chef Harrizona',

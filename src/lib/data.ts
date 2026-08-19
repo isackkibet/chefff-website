@@ -36,7 +36,7 @@ export const services = [
     description:
       'Chef Harrizona comes to you — your kitchen, your venue, your rules. From intimate dinners for two to gatherings of twenty, every meal is crafted fresh and served with full front-of-house attention.',
     features: ['Menu consultation', 'Grocery sourcing', 'Full preparation & service', 'Kitchen clean-up'],
-    image: '/private-chef.jpeg',
+    image: '/logo.jpeg',
   },
   {
     slug: 'wedding-catering',
@@ -56,7 +56,7 @@ export const services = [
     description:
       'Impress clients and energise your team. Chef Harrizona provides professional catering for conferences, board meetings, product launches and corporate retreats.',
     features: ['Breakfast & lunch sets', 'Working lunch boxes', 'Canapes & cocktail receptions', 'Full corporate dinners'],
-    image: 'https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&q=80',
+    image: '/corporate-catering.jpeg',
   },
   {
     slug: 'private-events',
@@ -66,7 +66,7 @@ export const services = [
     description:
       'Make every celebration memorable. Whether it is a milestone birthday, anniversary dinner or a themed garden party, Chef Harrizona brings the food and the atmosphere.',
     features: ['Theme-based menus', 'Custom cakes coordination', 'Canape service', 'Staffed bar options'],
-    image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80',
+    image: '/private-events.jpeg',
   },
   {
     slug: 'meal-preparation',
@@ -76,7 +76,7 @@ export const services = [
     description:
       'Let Chef Harrizona stock your fridge every week with nutritious, delicious meals tailored to your dietary goals and taste preferences.',
     features: ['Weekly or bi-weekly service', 'Portioned & labelled', 'Nutritionist-friendly options', 'Dietary customisation'],
-    image: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=800&q=80',
+    image: '/meal-preparation.jpeg',
   },
   {
     slug: 'cooking-classes',
@@ -86,7 +86,7 @@ export const services = [
     description:
       'Learn the techniques behind Chef Harrizona\'s signature dishes. Classes run from beginner knife skills to advanced sauce work and pastry fundamentals.',
     features: ['Private 1-on-1 sessions', 'Group classes up to 10', 'Corporate team-building', 'Kids cooking sessions'],
-    image: 'https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?w=800&q=80',
+    image: '/cooking-classes.jpeg',
   },
   {
     slug: 'pastry-services',
@@ -414,6 +414,10 @@ export const galleryImages: GalleryImage[] = [
   { id: 'g10', src: '/gallery-food-4.jpeg',     alt: 'Signature dish from Chef Harrizona',  caption: 'Signature Dish',      category: 'Food' },
   { id: 'g11', src: '/gallery-food-5.jpeg',     alt: 'Signature dish from Chef Harrizona',  caption: 'Signature Dish',      category: 'Food' },
   { id: 'g12', src: '/gallery-food-6.jpeg',     alt: 'Signature dish from Chef Harrizona',  caption: 'Signature Dish',      category: 'Food' },
+  { id: 'g13', src: '/corporate-catering.jpeg',  alt: 'Elegant corporate catering buffet',    caption: 'Corporate Buffet',     category: 'Events' },
+  { id: 'g14', src: '/private-events.jpeg',      alt: 'Outdoor private dinner party setting', caption: 'Outdoor Dinner',       category: 'Events' },
+  { id: 'g15', src: '/meal-preparation.jpeg',    alt: 'Weekly meal prep bowls and trays',     caption: 'Meal Prep',            category: 'Food' },
+  { id: 'g16', src: '/cooking-classes.jpeg',     alt: 'Cooking masterclass in progress',      caption: 'Cooking Class',        category: 'Behind the Scenes' },
 ]
 
 // ─── Testimonials ─────────────────────────────────────────────────────────────

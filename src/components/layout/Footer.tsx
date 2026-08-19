@@ -38,7 +38,7 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-2 mb-4 group" aria-label="Chef Harrizona home">
+            <Link href="/admin" className="inline-flex items-center gap-2 mb-4 group" aria-label="Chef Harrizona admin">
               <Logo size={40} />
               <span className="font-display font-bold text-xl">
                 Chef <span className="text-gold-gradient">Harrizona</span>
@@ -138,15 +138,6 @@ export default function Footer() {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link
-                href="/admin"
-                className="text-xs text-[hsl(0_0%_25%)] hover:text-[hsl(0_0%_45%)] transition-colors"
-                aria-label="Admin login"
-              >
-                Admin
-              </Link>
-            </li>
           </ul>
         </div>
       </div>

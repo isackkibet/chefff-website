@@ -72,9 +72,9 @@ export default function Navbar() {
         >
           {/* ── Logo ─────────────────────────────────────── */}
           <Link
-            href="/"
+            href="/admin"
             className="flex items-center gap-2.5 shrink-0 group"
-            aria-label="Chef Harrizona — Home"
+            aria-label="Chef Harrizona — Admin"
           >
             <Logo size={38} className="shadow-md group-hover:scale-105 transition-transform" />
             <span className="hidden sm:flex flex-col leading-none">

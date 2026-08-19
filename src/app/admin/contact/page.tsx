@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Mail, Search, Eye, MailOpen } from 'lucide-react'
+import { Mail, Search, Eye, MailOpen, Sparkles, Copy, Check, Send } from 'lucide-react'
 import AdminNav from '@/components/admin/AdminNav'
 import AdminGuard from '@/components/admin/AdminGuard'
 import Modal from '@/components/ui/Modal'
@@ -26,6 +26,9 @@ export default function AdminContactPage() {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [selected, setSelected] = useState<ContactMessage | null>(null)
+  const [aiReply, setAiReply] = useState('')
+  const [aiLoading, setAiLoading] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   async function loadMessages() {
     setLoading(true)
@@ -69,7 +72,44 @@ export default function AdminContactPage() {
 
   function openDetail(m: ContactMessage) {
     setSelected(m)
+    setAiReply('')
+    setCopied(false)
     if (!m.read) markRead(m.id, true)
+  }
+
+  async function draftAiReply() {
+    if (!selected) return
+    setAiLoading(true)
+    try {
+      const res = await fetch('/api/admin/ai-reply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: selected.name,
+          subject: selected.subject,
+          message: selected.message,
+          context: 'contact',
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok || !data.reply) throw new Error(data.error ?? 'Failed to draft reply')
+      setAiReply(data.reply)
+    } catch {
+      toast('error', 'Could not draft an AI reply')
+    } finally {
+      setAiLoading(false)
+    }
+  }
+
+  async function copyReply() {
+    if (!aiReply) return
+    try {
+      await navigator.clipboard.writeText(aiReply)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      toast('error', 'Could not copy reply')
+    }
   }
 
   return (
@@ -179,6 +219,48 @@ export default function AdminContactPage() {
             <div className="mb-6 rounded-xl bg-[hsl(0_0%_10%)] border border-[hsl(0_0%_18%)] p-4">
               <p className="text-xs text-[hsl(0_0%_45%)] uppercase tracking-wide mb-2">Message</p>
               <p className="text-sm text-[hsl(42_30%_85%)] whitespace-pre-wrap leading-relaxed">{selected.message}</p>
+            </div>
+
+            {/* AI reply assistant */}
+            <div className="mb-6 rounded-xl bg-[hsl(0_0%_10%)] border border-[hsl(45_90%_52%/0.25)] p-4">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-semibold text-[hsl(45_90%_52%)] flex items-center gap-1.5">
+                  <Sparkles size={15} aria-hidden="true" /> AI Reply Assistant
+                </p>
+                <Button variant="outline" size="sm" onClick={draftAiReply} loading={aiLoading} disabled={!!aiReply}>
+                  {aiReply ? 'Regenerate' : 'Draft AI Reply'}
+                </Button>
+              </div>
+
+              {aiLoading && <LoadingSpinner size="sm" />}
+
+              {aiReply && (
+                <>
+                  <textarea
+                    value={aiReply}
+                    onChange={(e) => setAiReply(e.target.value)}
+                    rows={6}
+                    aria-label="AI drafted reply"
+                    className="w-full rounded-xl bg-[hsl(0_0%_12%)] border border-[hsl(0_0%_22%)] px-3 py-2.5 text-sm text-[hsl(42_30%_94%)] focus:outline-none focus:border-[hsl(45_90%_52%)] transition-colors resize-none mb-3"
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    <Button variant="primary" size="sm" onClick={copyReply}>
+                      {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
+                      {copied ? 'Copied' : 'Copy Reply'}
+                    </Button>
+                    {selected.phone && (
+                      <a
+                        href={`https://wa.me/${selected.phone.replace(/\D/g, '')}?text=${encodeURIComponent(aiReply)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#25D366] px-4 py-2 text-sm font-semibold text-[hsl(0_0%_10%)] hover:bg-[#2ee478] transition-colors"
+                      >
+                        <Send size={14} aria-hidden="true" /> Send via WhatsApp
+                      </a>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="flex flex-wrap gap-2 pt-4 border-t border-[hsl(0_0%_18%)]">

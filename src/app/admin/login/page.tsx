@@ -8,7 +8,6 @@ import { z } from 'zod'
 import { Eye, EyeOff, AlertCircle } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import Logo from '@/components/ui/Logo'
-import { checkAdminCredentials, setAdminSession, getAdminSession } from '@/lib/admin/auth'
 
 const schema = z.object({
   email:    z.email('Valid email required'),
@@ -23,9 +22,11 @@ export default function AdminLoginPage() {
   const [attempts, setAttempts] = useState(0)
   const locked = attempts >= 5
 
-  // Redirect if already logged in
+  // Redirect if an HTTP-only admin session is already active.
   useEffect(() => {
-    if (getAdminSession()) router.replace('/admin/dashboard')
+    fetch('/api/admin/auth')
+      .then((res) => { if (res.ok) router.replace('/admin/dashboard') })
+      .catch(() => undefined)
   }, [router])
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -34,14 +35,18 @@ export default function AdminLoginPage() {
   async function onSubmit(data: FormData) {
     if (locked) return
     setAuthError('')
-    await new Promise((r) => setTimeout(r, 600)) // simulate network latency
+    const response = await fetch('/api/admin/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
 
-    if (checkAdminCredentials(data.email, data.password)) {
-      setAdminSession({ email: data.email, role: 'ADMIN', loginTime: Date.now() })
+    if (response.ok) {
       router.push('/admin/dashboard')
     } else {
       setAttempts((n) => n + 1)
-      setAuthError('Invalid email or password.')
+      const result = await response.json().catch(() => null) as { error?: string } | null
+      setAuthError(result?.error ?? 'Unable to sign in. Please try again.')
     }
   }
 
@@ -57,13 +62,6 @@ export default function AdminLoginPage() {
           </div>
           <h1 className="text-2xl font-display font-bold">Chef Harrizona Admin</h1>
           <p className="text-sm text-[hsl(0_0%_50%)] mt-1">Sign in to your dashboard</p>
-        </div>
-
-        {/* Demo credentials notice */}
-        <div className="mb-6 rounded-xl bg-[hsl(45_90%_52%/0.08)] border border-[hsl(45_90%_52%/0.2)] px-4 py-3">
-          <p className="text-xs text-[hsl(45_90%_52%)]">
-            <strong>Demo credentials:</strong> admin@chefharrizona.co.ke / admin123
-          </p>
         </div>
 
         <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-[hsl(0_0%_18%)] p-8">
@@ -86,7 +84,7 @@ export default function AdminLoginPage() {
                 <input
                   id="admin-email" type="email" autoComplete="email"
                   {...register('email')} aria-required="true" aria-invalid={!!errors.email}
-                  className={inputClass} placeholder="admin@chefharrizona.co.ke"
+                  className={inputClass} placeholder="harrison@gmail.com"
                 />
                 {errors.email && <p role="alert" className="mt-1 text-xs text-[hsl(0_72%_65%)]">{errors.email.message}</p>}
               </div>

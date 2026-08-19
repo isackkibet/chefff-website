@@ -198,7 +198,7 @@ export default function ServicesPage() {
                 <div className="relative h-72 lg:h-96 rounded-2xl overflow-hidden">
                   <Image
                     src={service.image} alt={service.title} fill
-                    className="object-contain bg-[hsl(0_0%_9%)]"
+                    className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 </div>

@@ -8,7 +8,6 @@ import AdminGuard from '@/components/admin/AdminGuard'
 import StatCard from '@/components/admin/StatCard'
 import BookingStatusBadge from '@/components/admin/BookingStatusBadge'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
-import { getAdminSession } from '@/lib/admin/auth'
 import type { BookingStatus } from '@/lib/admin/store'
 
 interface Booking {
@@ -46,8 +45,9 @@ export default function DashboardPage() {
   }, [])
 
   useEffect(() => {
-    const session = getAdminSession()
-    if (session) setAdminEmail(session.email)
+    fetch('/api/admin/auth')
+      .then(async (res) => res.ok ? res.json() as Promise<{ email: string }> : null)
+      .then((session) => { if (session) setAdminEmail(session.email) })
     fetchBookings()
   }, [fetchBookings])
 

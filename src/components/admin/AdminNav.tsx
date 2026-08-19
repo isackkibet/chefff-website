@@ -8,8 +8,8 @@ import {
   FileText, Settings, LogOut, Menu, X, Mail,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { clearAdminSession } from '@/lib/admin/auth'
 import Logo from '@/components/ui/Logo'
+import AdminAlerts from '@/components/admin/AdminAlerts'
 
 const navItems = [
   { label: 'Dashboard',    href: '/admin/dashboard',     Icon: LayoutDashboard },
@@ -27,20 +27,23 @@ export default function AdminNav() {
   const router = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  function handleLogout() {
-    clearAdminSession()
+  async function handleLogout() {
+    await fetch('/api/admin/auth', { method: 'DELETE' })
     router.push('/admin/login')
   }
 
   const NavContent = () => (
     <>
       {/* Logo */}
-      <div className="flex items-center gap-2.5 px-5 h-16 border-b border-[hsl(0_0%_18%)]">
-        <Logo size={32} />
-        <div>
-          <p className="font-display font-bold text-sm leading-none">Chef Harrizona</p>
-          <p className="text-[10px] text-[hsl(45_90%_52%)] uppercase tracking-widest">Admin</p>
+      <div className="flex items-center justify-between gap-2 px-5 h-16 border-b border-[hsl(0_0%_18%)]">
+        <div className="flex items-center gap-2.5">
+          <Logo size={32} />
+          <div>
+            <p className="font-display font-bold text-sm leading-none">Chef Harrizona</p>
+            <p className="text-[10px] text-[hsl(45_90%_52%)] uppercase tracking-widest">Admin</p>
+          </div>
         </div>
+        <AdminAlerts />
       </div>
 
       {/* Links */}
@@ -96,14 +99,17 @@ export default function AdminNav() {
           <Logo size={28} />
           <span className="font-display font-bold text-sm">Admin</span>
         </div>
-        <button
-          onClick={() => setMobileOpen((v) => !v)}
-          className="size-9 flex items-center justify-center rounded-lg text-[hsl(42_30%_94%)] hover:bg-[hsl(0_0%_100%/0.08)] transition-colors"
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={mobileOpen}
-        >
-          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="flex items-center gap-2">
+          <AdminAlerts />
+          <button
+            onClick={() => setMobileOpen((v) => !v)}
+            className="size-9 flex items-center justify-center rounded-lg text-[hsl(42_30%_94%)] hover:bg-[hsl(0_0%_100%/0.08)] transition-colors"
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile drawer */}

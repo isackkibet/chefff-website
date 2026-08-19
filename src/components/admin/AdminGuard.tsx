@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { getAdminSession } from '@/lib/admin/auth'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
 
 export default function AdminGuard({ children }: { children: React.ReactNode }) {
@@ -10,12 +9,12 @@ export default function AdminGuard({ children }: { children: React.ReactNode }) 
   const [checking, setChecking] = useState(true)
 
   useEffect(() => {
-    const session = getAdminSession()
-    if (!session) {
-      router.replace('/admin/login')
-    } else {
-      setChecking(false)
-    }
+    fetch('/api/admin/auth')
+      .then((response) => {
+        if (!response.ok) router.replace('/admin/login')
+        else setChecking(false)
+      })
+      .catch(() => router.replace('/admin/login'))
   }, [router])
 
   if (checking) {

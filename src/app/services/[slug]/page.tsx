@@ -131,7 +131,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           <div className="relative h-96 lg:h-[520px] rounded-3xl overflow-hidden">
             <Image
               src={s.image} alt={s.title} fill
-              className="object-contain bg-[hsl(0_0%_9%)]" priority
+              className="object-cover" priority
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
             {s.price && s.originalPrice && (

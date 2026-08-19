@@ -54,23 +54,23 @@ export default function GalleryClient() {
           ))}
         </div>
 
-        {/* Masonry-style grid */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4" role="list">
+        {/* Full grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" role="list">
           {filtered.map((img, idx) => (
             <button
               key={img.id}
               role="listitem"
               onClick={() => openLightbox(idx)}
-              className="relative w-full overflow-hidden rounded-xl block group cursor-pointer focus-visible:ring-2 focus-visible:ring-[hsl(45_90%_52%)] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(0_0%_10%)]"
+              className="relative aspect-square w-full overflow-hidden rounded-xl block group cursor-pointer focus-visible:ring-2 focus-visible:ring-[hsl(45_90%_52%)] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(0_0%_10%)]"
               aria-label={`View ${img.alt}`}
             >
               <Image
                 src={img.src}
                 alt={img.alt}
-                width={600}
-                height={400}
-                className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-end p-3">
                 {img.caption && (
@@ -114,17 +114,17 @@ export default function GalleryClient() {
           </button>
 
           {/* Image */}
-          <div className="relative max-w-5xl max-h-[85vh] w-full mx-16">
+          <div className="relative w-screen h-screen">
             <Image
               src={filtered[lightboxIdx].src}
               alt={filtered[lightboxIdx].alt}
-              width={1200}
-              height={800}
-              className="object-contain max-h-[85vh] w-auto mx-auto rounded-xl"
+              fill
+              className="object-contain p-4 sm:p-10"
+              sizes="100vw"
               priority
             />
             {filtered[lightboxIdx].caption && (
-              <p className="text-center mt-3 text-sm text-white/70">{filtered[lightboxIdx].caption}</p>
+              <p className="absolute bottom-6 inset-x-0 text-center text-sm text-white/70 px-4">{filtered[lightboxIdx].caption}</p>
             )}
           </div>
 
@@ -138,7 +138,7 @@ export default function GalleryClient() {
           </button>
 
           {/* Counter */}
-          <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-white/50" aria-live="polite">
+          <p className="absolute bottom-16 left-1/2 -translate-x-1/2 text-sm text-white/50" aria-live="polite">
             {lightboxIdx + 1} / {filtered.length}
           </p>
         </div>
