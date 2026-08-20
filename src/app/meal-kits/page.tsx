@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Truck, Zap, Leaf } from 'lucide-react'
 import MealKitsClient from './MealKitsClient'
 
 export const metadata: Metadata = {
@@ -31,15 +32,15 @@ export default function MealKitsPage() {
               {/* Trust badges */}
               <div className="flex flex-wrap gap-3 mb-8">
                 {[
-                  { icon: '🚚', text: 'Free delivery in Nairobi' },
-                  { icon: '⚡', text: 'Same-day delivery available' },
-                  { icon: '🌿', text: 'Fresh ingredients guaranteed' },
+                  { icon: <Truck size={16} aria-hidden="true" />, text: 'Free delivery in Nairobi' },
+                  { icon: <Zap size={16} aria-hidden="true" />, text: 'Same-day delivery available' },
+                  { icon: <Leaf size={16} aria-hidden="true" />, text: 'Fresh ingredients guaranteed' },
                 ].map(({ icon, text }) => (
                   <span
                     key={text}
                     className="inline-flex items-center gap-2 rounded-full bg-[hsl(0_0%_14%)] border border-[hsl(0_0%_20%)] px-4 py-2 text-sm text-[hsl(42_30%_85%)]"
                   >
-                    <span aria-hidden="true">{icon}</span>
+                    <span className="text-[hsl(45_90%_52%)]" aria-hidden="true">{icon}</span>
                     {text}
                   </span>
                 ))}

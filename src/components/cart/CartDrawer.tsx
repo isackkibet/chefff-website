@@ -1,6 +1,6 @@
 'use client'
 
-import { ShoppingCart, Minus, Plus, Trash2, MessageCircle } from 'lucide-react'
+import { ShoppingCart, Minus, Plus, Trash2, MessageCircle, X } from 'lucide-react'
 import Image from 'next/image'
 import { useCart } from '@/lib/cart'
 import { brand } from '@/lib/data'
@@ -20,7 +20,7 @@ const origin = typeof window !== 'undefined' ? window.location.origin : ''
   }
 
   const orderMessage = [
-    '👨🍳 *ORDER — Chef Harrizona*',
+    '*ORDER — Chef Harrizona*',
     '',
     ...items.flatMap((i, idx) => [
       `*${idx + 1}. ${i.name}*`,
@@ -29,12 +29,12 @@ const origin = typeof window !== 'undefined' ? window.location.origin : ''
       `Picture: ${absoluteImage(i.image)}`,
       '',
     ]),
-    `💰 *TOTAL: KSh ${total.toLocaleString()}*`,
+    `*TOTAL: KSh ${total.toLocaleString()}*`,
     '',
-    '🚚 Free delivery in Nairobi',
-    '⚡ Same-day delivery available',
+    'Free delivery in Nairobi',
+    'Same-day delivery available',
     '',
-    '📲 Please confirm my order. Asante!',
+    'Please confirm my order. Asante!',
   ].join('\n')
 
   const whatsappHref = `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(orderMessage)}`
@@ -64,7 +64,7 @@ const origin = typeof window !== 'undefined' ? window.location.origin : ''
             className="size-9 flex items-center justify-center rounded-lg text-[hsl(42_30%_94%)] hover:bg-[hsl(0_0%_100%/0.08)] transition-colors"
             aria-label="Close cart"
           >
-            ✕
+            <X size={20} aria-hidden="true" />
           </button>
         </div>
 

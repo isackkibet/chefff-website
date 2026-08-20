@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, ChevronDown, ShoppingBag } from 'lucide-react'
+import { Menu, X, ChevronDown, ShoppingBag, UtensilsCrossed } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { ButtonLink } from '@/components/ui/Button'
 import Logo from '@/components/ui/Logo'
@@ -149,7 +149,7 @@ export default function Navbar() {
                     className="flex items-center gap-3 px-4 py-3 text-sm hover:bg-[hsl(0_0%_16%)] transition-colors border-t border-[hsl(0_0%_16%)]"
                   >
                     <span className="flex size-8 items-center justify-center rounded-xl bg-[hsl(45_90%_52%/0.12)] text-[hsl(45_90%_52%)]">
-                      🍽️
+                      <UtensilsCrossed size={16} aria-hidden="true" />
                     </span>
                     <div>
                       <p className="font-semibold text-[hsl(42_30%_94%)]">Experiences</p>

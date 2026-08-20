@@ -23,13 +23,13 @@ const dietaryOptions: { label: DietaryTag; icon: React.ReactNode }[] = [
 ]
 
 function DietaryBadge({ tag }: { tag: DietaryTag }) {
-  const map: Record<DietaryTag, string> = {
-    Vegetarian: '🌱', Vegan: '🌿', 'Gluten Free': '🌾',
-    'Dairy Free': '🥛', 'Contains Nuts': '🥜', Spicy: '🌶️',
+  const map: Record<DietaryTag, React.ReactNode> = {
+    Vegetarian: <Leaf size={14} />, Vegan: <Sprout size={14} />, 'Gluten Free': <Wheat size={14} />,
+    'Dairy Free': <Milk size={14} />, 'Contains Nuts': <Nut size={14} />, Spicy: <Flame size={14} />,
   }
   return (
     <span className="inline-flex items-center gap-1 rounded-full bg-[hsl(0_0%_100%/0.08)] px-2 py-0.5 text-xs text-[hsl(0_0%_65%)]">
-      <span aria-hidden="true">{map[tag]}</span> {tag}
+      <span className="text-[hsl(45_90%_52%)]" aria-hidden="true">{map[tag]}</span> {tag}
     </span>
   )
 }

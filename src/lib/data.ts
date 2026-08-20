@@ -30,7 +30,7 @@ export const stats = [
 export const services = [
   {
     slug: 'private-chef',
-    icon: '👨‍🍳',
+    icon: 'chef',
     title: 'Private Chef',
     short: 'A personalised restaurant experience in your home or chosen location.',
     description:
@@ -40,7 +40,7 @@ export const services = [
   },
   {
     slug: 'wedding-catering',
-    icon: '💍',
+    icon: 'wedding',
     title: 'Wedding Catering',
     short: 'Bespoke menus designed around your wedding day.',
     description:
@@ -50,7 +50,7 @@ export const services = [
   },
   {
     slug: 'corporate-catering',
-    icon: '🏢',
+    icon: 'corporate',
     title: 'Corporate Catering',
     short: 'Premium food experiences for meetings and business events.',
     description:
@@ -60,7 +60,7 @@ export const services = [
   },
   {
     slug: 'private-events',
-    icon: '🎉',
+    icon: 'party',
     title: 'Private Events',
     short: 'Customised menus and full service for birthdays, anniversaries and celebrations.',
     description:
@@ -70,7 +70,7 @@ export const services = [
   },
   {
     slug: 'meal-preparation',
-    icon: '🥗',
+    icon: 'meal',
     title: 'Weekly Meal Prep',
     short: 'Healthy, restaurant-quality meals prepared weekly for busy lifestyles.',
     description:
@@ -80,7 +80,7 @@ export const services = [
   },
   {
     slug: 'cooking-classes',
-    icon: '🎓',
+    icon: 'classes',
     title: 'Cooking Classes',
     short: 'Private and group culinary classes for all skill levels.',
     description:
@@ -90,7 +90,7 @@ export const services = [
   },
   {
     slug: 'pastry-services',
-    icon: '🥐',
+    icon: 'pastry',
     title: 'Pastry Services',
     short: 'Handcrafted samosas, spring rolls, pizza and more — made fresh to order.',
     description:
@@ -116,7 +116,7 @@ export const services = [
   },
   {
     slug: 'cooking-services',
-    icon: '🍳',
+    icon: 'cooking',
     title: 'Cooking Services',
     short: 'Full breakfast, lunch buffets and dinner — professionally prepared at your location.',
     description:

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { CheckCircle, ArrowRight, Tag } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/Button'
 import SectionHeader from '@/components/ui/SectionHeader'
+import ServiceIcon from '@/components/ui/ServiceIcon'
 import AddToCartButton from '@/components/cart/AddToCartButton'
 import { services } from '@/lib/data'
 
@@ -96,7 +97,7 @@ export default function ServicesPage() {
                         )}
                       </div>
                     )}
-                    <span className="absolute top-4 left-4 text-3xl" aria-hidden="true">{s.icon}</span>
+                    <span className="absolute top-4 left-4 text-[hsl(45_90%_52%)]" aria-hidden="true"><ServiceIcon name={s.icon} size={30} /></span>
                   </div>
 
                   <div className="p-6 flex flex-col flex-1">
@@ -175,7 +176,7 @@ export default function ServicesPage() {
                 className={`grid lg:grid-cols-2 gap-10 items-center rounded-3xl bg-[hsl(0_0%_12%)] border border-[hsl(0_0%_18%)] overflow-hidden p-8 lg:p-12 ${idx % 2 !== 0 ? 'lg:[&>*:first-child]:order-2' : ''}`}
               >
                 <div>
-                  <div className="text-5xl mb-4" aria-hidden="true">{service.icon}</div>
+                  <div className="mb-4 text-[hsl(45_90%_52%)]" aria-hidden="true"><ServiceIcon name={service.icon} size={48} /></div>
                   <h2 className="text-2xl sm:text-3xl font-bold mb-4">{service.title}</h2>
                   <p className="text-[hsl(0_0%_65%)] leading-relaxed mb-6">{service.description}</p>
                   <ul className="space-y-2.5 mb-8" role="list">

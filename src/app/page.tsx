@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Star, ChevronRight } from 'lucide-react'
+import ServiceIcon from '@/components/ui/ServiceIcon'
 import { ButtonLink } from '@/components/ui/Button'
 import SectionHeader from '@/components/ui/SectionHeader'
 import StarRating from '@/components/ui/StarRating'
@@ -138,7 +139,7 @@ export default async function HomePage() {
                 href={`/services/${s.slug}`}
                 className="group relative overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-[hsl(0_0%_18%)] p-6 card-hover"
               >
-                <div className="text-4xl mb-4" aria-hidden="true">{s.icon}</div>
+                <div className="mb-4 text-[hsl(45_90%_52%)]" aria-hidden="true"><ServiceIcon name={s.icon} size={40} /></div>
                 <h3 className="font-display font-semibold text-lg mb-2 group-hover:text-[hsl(45_90%_52%)] transition-colors">
                   {s.title}
                 </h3>

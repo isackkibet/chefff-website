@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { CheckCircle, ArrowRight, ArrowLeft, Tag } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/Button'
+import ServiceIcon from '@/components/ui/ServiceIcon'
 import { services } from '@/lib/data'
 
 interface Props { params: Promise<{ slug: string }> }
@@ -50,7 +51,7 @@ export default async function ServiceDetailPage({ params }: Props) {
 
           {/* ── Content ─────────────────────────────────────── */}
           <div>
-            <div className="text-5xl mb-4" aria-hidden="true">{s.icon}</div>
+            <div className="mb-4 text-[hsl(45_90%_52%)]" aria-hidden="true"><ServiceIcon name={s.icon} size={48} /></div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">{s.title}</h1>
             <div className="section-divider mb-8" />
 
@@ -162,7 +163,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                     key={sv.slug} href={`/services/${sv.slug}`}
                     className="group rounded-2xl bg-[hsl(0_0%_12%)] border border-[hsl(0_0%_18%)] p-6 card-hover"
                   >
-                    <div className="text-3xl mb-3" aria-hidden="true">{sv.icon}</div>
+                    <div className="mb-3 text-[hsl(45_90%_52%)]" aria-hidden="true"><ServiceIcon name={sv.icon} size={28} /></div>
                     <h3 className="font-semibold mb-1 group-hover:text-[hsl(45_90%_52%)] transition-colors">{sv.title}</h3>
                     <p className="text-sm text-[hsl(0_0%_55%)] mb-3">{sv.short}</p>
                     {other.price && (
