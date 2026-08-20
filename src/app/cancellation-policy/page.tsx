@@ -31,7 +31,7 @@ export default function CancellationPolicyPage() {
       <h2>Cancellation by Chef Harrizona</h2>
       <p>In the unlikely event that Chef Harrizona must cancel due to illness or circumstances beyond our control, a full refund of any amounts paid will be issued within 7 business days. We will also make reasonable efforts to source a suitable replacement chef.</p>
 
-      <h2>Deposits</h2>
+      <h2>deposit</h2>
       <p>A 40% non-refundable deposit (subject to the cancellation window above) is required to confirm all bookings. This covers planning, ingredient sourcing and scheduling costs incurred in preparation for your event.</p>
 
       <h2>How to Cancel or Reschedule</h2>

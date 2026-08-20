@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { ChefHat, Leaf, Sprout, Wheat, Milk, Nut, Flame, Info } from 'lucide-react'
+import { ChefHat, Info } from 'lucide-react'
 import Badge from '@/components/ui/Badge'
 import Modal from '@/components/ui/Modal'
 import { ButtonLink } from '@/components/ui/Button'
@@ -13,23 +13,12 @@ type Category = 'All' | MenuItem['category']
 
 const categories: Category[] = ['All', 'Starters', 'Mains', 'Desserts', 'Drinks', 'Chef Specials']
 
-const dietaryOptions: { label: DietaryTag; icon: React.ReactNode }[] = [
-  { label: 'Vegetarian',    icon: <Leaf size={14} /> },
-  { label: 'Vegan',         icon: <Sprout size={14} /> },
-  { label: 'Gluten Free',   icon: <Wheat size={14} /> },
-  { label: 'Dairy Free',    icon: <Milk size={14} /> },
-  { label: 'Contains Nuts', icon: <Nut size={14} /> },
-  { label: 'Spicy',         icon: <Flame size={14} /> },
-]
+const dietaryOptions: DietaryTag[] = ['Vegetarian', 'Vegan', 'Gluten Free', 'Dairy Free', 'Contains Nuts', 'Spicy']
 
 function DietaryBadge({ tag }: { tag: DietaryTag }) {
-  const map: Record<DietaryTag, React.ReactNode> = {
-    Vegetarian: <Leaf size={14} />, Vegan: <Sprout size={14} />, 'Gluten Free': <Wheat size={14} />,
-    'Dairy Free': <Milk size={14} />, 'Contains Nuts': <Nut size={14} />, Spicy: <Flame size={14} />,
-  }
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-[hsl(0_0%_100%/0.08)] px-2 py-0.5 text-xs text-[hsl(0_0%_65%)]">
-      <span className="text-[hsl(45_90%_52%)]" aria-hidden="true">{map[tag]}</span> {tag}
+    <span className="inline-flex items-center rounded-full bg-[hsl(0_0%_100%/0.08)] px-2 py-0.5 text-xs text-[hsl(0_0%_65%)]">
+      {tag}
     </span>
   )
 }
@@ -72,7 +61,7 @@ export default function MenuClient() {
 
         {/* Dietary filter */}
         <div className="flex flex-wrap gap-2 justify-center mb-10" role="group" aria-label="Dietary filters">
-          {dietaryOptions.map(({ label, icon }) => (
+          {dietaryOptions.map((label) => (
             <button
               key={label} onClick={() => toggleDietary(label)} aria-pressed={dietary.includes(label)}
               className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all border ${
@@ -81,7 +70,7 @@ export default function MenuClient() {
                   : 'border-[hsl(0_0%_22%)] text-[hsl(0_0%_55%)] hover:border-[hsl(0_0%_35%)]'
               }`}
             >
-              <span aria-hidden="true">{icon}</span> {label}
+              {label}
             </button>
           ))}
           {dietary.length > 0 && (
