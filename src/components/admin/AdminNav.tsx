@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
   LayoutDashboard, Calendar, UtensilsCrossed, Image, Star,
-  FileText, Settings, LogOut, Menu, X, Mail,
+  FileText, Settings, LogOut, Menu, X, Mail, Video,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Logo from '@/components/ui/Logo'
@@ -17,6 +17,7 @@ const navItems = [
   { label: 'Messages',     href: '/admin/contact',       Icon: Mail },
   { label: 'Menu',         href: '/admin/menu',          Icon: UtensilsCrossed },
   { label: 'Gallery',      href: '/admin/gallery',       Icon: Image },
+  { label: 'Media',        href: '/admin/media',         Icon: Video },
   { label: 'Testimonials', href: '/admin/testimonials',  Icon: Star },
   { label: 'Blog',         href: '/admin/blog',          Icon: FileText },
   { label: 'Settings',     href: '/admin/settings',      Icon: Settings },

@@ -2,20 +2,31 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { db } from '@/lib/db/client'
 import { bookings } from '@/lib/db/schema'
+import {
+  forbiddenResponse,
+  getClientIp,
+  logSecurityEvent,
+  originIsAllowed,
+  rateLimit,
+  rateLimitedResponse,
+} from '@/lib/security'
+
+const BOOKING_LIMIT = 10
+const BOOKING_WINDOW_MS = 60 * 60 * 1000
 
 const schema = z.object({
-  fullName:        z.string().min(2),
-  email:           z.email(),
-  phone:           z.string().min(9),
-  eventType:       z.string().min(1),
-  eventDate:       z.string().min(1),
-  preferredTime:   z.string().min(1),
+  fullName:        z.string().trim().min(2).max(80),
+  email:           z.email().max(254),
+  phone:           z.string().trim().min(9).max(30),
+  eventType:       z.string().trim().min(1).max(80),
+  eventDate:       z.string().trim().min(1).max(40),
+  preferredTime:   z.string().trim().min(1).max(40),
   guestCount:      z.number().int().min(1).max(500),
-  location:        z.string().min(3),
-  budgetRange:     z.string().optional(),
-  cuisinePrefs:    z.string().optional(),
-  dietaryReqs:     z.string().optional(),
-  specialRequests: z.string().optional(),
+  location:        z.string().trim().min(3).max(200),
+  budgetRange:     z.string().trim().max(80).optional(),
+  cuisinePrefs:    z.string().trim().max(500).optional(),
+  dietaryReqs:     z.string().trim().max(500).optional(),
+  specialRequests: z.string().trim().max(2_000).optional(),
 })
 
 function generateRef() {
@@ -23,6 +34,19 @@ function generateRef() {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = getClientIp(req)
+
+  if (!originIsAllowed(req)) {
+    logSecurityEvent('origin-blocked', { ip, route: '/api/bookings' })
+    return forbiddenResponse()
+  }
+
+  const { allowed, retryAfterSeconds } = rateLimit(`booking:${ip}`, BOOKING_LIMIT, BOOKING_WINDOW_MS)
+  if (!allowed) {
+    logSecurityEvent('rate-limited', { ip, route: '/api/bookings' })
+    return rateLimitedResponse(retryAfterSeconds)
+  }
+
   try {
     const body = await req.json()
     const data = schema.parse(body)
@@ -46,9 +70,11 @@ export async function POST(req: NextRequest) {
       status:          'PENDING',
     }).returning()
 
+    logSecurityEvent('submission', { ip, route: '/api/bookings', refNumber, id: booking.id })
     return NextResponse.json({ success: true, refNumber, id: booking.id }, { status: 201 })
   } catch (err) {
     if (err instanceof z.ZodError) {
+      logSecurityEvent('validation-failed', { ip, route: '/api/bookings' })
       return NextResponse.json({ error: 'Validation failed', details: err.issues }, { status: 422 })
     }
     console.error('[POST /api/bookings]', err)
