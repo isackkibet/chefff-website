@@ -3,9 +3,22 @@ import 'server-only'
 import cloudinary from 'cloudinary'
 
 const DEFAULT_FOLDER = 'chef-harrizona/videos'
-export const DEFAULT_MAX_UPLOAD_BYTES = 100 * 1024 * 1024
+export const DEFAULT_MAX_IMAGE_BYTES = 10 * 1024 * 1024
+export const DEFAULT_MAX_VIDEO_BYTES = 100 * 1024 * 1024
 
-export function getCloudinaryConfig() {
+export function getCloudinaryConfig(): { cloudName: string; apiKey: string; apiSecret: string } | null {
+  if (process.env.CLOUDINARY_URL) {
+    try {
+      const url = new URL(process.env.CLOUDINARY_URL)
+      const apiKey = decodeURIComponent(url.username)
+      const apiSecret = decodeURIComponent(url.password)
+      const cloudName = url.hostname
+      if (apiKey && apiSecret && cloudName) return { cloudName, apiKey, apiSecret }
+    } catch {
+      // fall through to individual variables
+    }
+  }
+
   const cloudName = process.env.CLOUDINARY_CLOUD_NAME
   const apiKey = process.env.CLOUDINARY_API_KEY
   const apiSecret = process.env.CLOUDINARY_API_SECRET
@@ -13,30 +26,40 @@ export function getCloudinaryConfig() {
   return { cloudName, apiKey, apiSecret }
 }
 
-export function getUploadFolder(): string {
-  return process.env.CLOUDINARY_FOLDER?.trim().replace(/\/+$/, '') || DEFAULT_FOLDER
-}
-
-export function getMaxUploadBytes(): number {
-  const raw = Number(process.env.CLOUDINARY_MAX_UPLOAD_BYTES)
-  return Number.isFinite(raw) && raw > 0 ? Math.min(raw, 100 * 1024 * 1024) : DEFAULT_MAX_UPLOAD_BYTES
-}
-
-export function createUploadSignature(): { cloudName: string; apiKey: string; timestamp: number; signature: string; folder: string; resourceType: string } | null {
+function configureCloudinary(): boolean {
   const config = getCloudinaryConfig()
-  if (!config) return null
-
+  if (!config) return false
   cloudinary.v2.config({
     cloud_name: config.cloudName,
     api_key: config.apiKey,
     api_secret: config.apiSecret,
   })
+  return true
+}
 
+export function getUploadFolder(): string {
+  return process.env.CLOUDINARY_FOLDER?.trim().replace(/\/+$/, '') || DEFAULT_FOLDER
+}
+
+export function getMaxUploadBytes(resourceType: 'image' | 'video' = 'video'): number {
+  const raw = Number(process.env.CLOUDINARY_MAX_UPLOAD_BYTES)
+  if (resourceType === 'image') {
+    const cap = Number.isFinite(raw) && raw > 0 ? Math.min(raw, DEFAULT_MAX_IMAGE_BYTES) : DEFAULT_MAX_IMAGE_BYTES
+    return cap
+  }
+  return Number.isFinite(raw) && raw > 0 ? Math.min(raw, DEFAULT_MAX_VIDEO_BYTES) : DEFAULT_MAX_VIDEO_BYTES
+}
+
+export function createUploadSignature(resourceType: 'image' | 'video' = 'video'): { cloudName: string; apiKey: string; timestamp: number; signature: string; folder: string; resourceType: string } | null {
+  if (!configureCloudinary()) return null
+
+  const config = getCloudinaryConfig()
+  if (!config) return null
   const folder = getUploadFolder()
   const timestamp = Math.round(Date.now() / 1000)
   const signature = cloudinary.v2.utils.api_sign_request({ timestamp, folder }, config.apiSecret)
 
-  return { cloudName: config.cloudName, apiKey: config.apiKey, timestamp, signature, folder, resourceType: 'video' }
+  return { cloudName: config.cloudName, apiKey: config.apiKey, timestamp, signature, folder, resourceType }
 }
 
 export interface VideoAsset {

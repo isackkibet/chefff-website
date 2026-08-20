@@ -19,11 +19,14 @@ export async function POST(req: NextRequest) {
     return rateLimitedResponse(retryAfterSeconds)
   }
 
-  const params = createUploadSignature()
+  const type = req.nextUrl.searchParams.get('type')
+  const resourceType = type === 'image' ? 'image' : 'video'
+
+  const params = createUploadSignature(resourceType)
   if (!params) {
     logSecurityEvent('cloudinary-not-configured', { ip, route: '/api/admin/upload' })
     return NextResponse.json({ error: 'Cloudinary is not configured.' }, { status: 503 })
   }
 
-  return NextResponse.json({ ...params, maxUploadBytes: getMaxUploadBytes() })
+  return NextResponse.json({ ...params, maxUploadBytes: getMaxUploadBytes(resourceType) })
 }

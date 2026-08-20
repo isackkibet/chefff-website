@@ -8,6 +8,7 @@ import AdminGuard from '@/components/admin/AdminGuard'
 import Modal from '@/components/ui/Modal'
 import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
+import ImageUploader from '@/components/ui/ImageUploader'
 import { adminStore } from '@/lib/admin/store'
 import { type GalleryImage, type GalleryCategory } from '@/lib/data'
 import { useToast } from '@/components/ui/ToastProvider'
@@ -102,8 +103,7 @@ export default function AdminGalleryPage() {
         <h2 className="font-display text-xl font-bold mb-5 pr-8">Add Gallery Image</h2>
         <div className="space-y-4">
           <div>
-            <label htmlFor="img-src" className="block text-sm font-medium mb-1.5">Image URL *</label>
-            <input id="img-src" value={form.src} onChange={(e) => setForm({ ...form, src: e.target.value })} className={inputClass} placeholder="https://…" />
+            <ImageUploader value={form.src} onChange={(src) => setForm({ ...form, src })} label="Image *" />
           </div>
           <div>
             <label htmlFor="img-alt" className="block text-sm font-medium mb-1.5">Alt Text * <span className="text-[hsl(0_0%_45%)] font-normal">(for accessibility)</span></label>

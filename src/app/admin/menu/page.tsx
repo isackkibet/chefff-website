@@ -8,6 +8,7 @@ import AdminGuard from '@/components/admin/AdminGuard'
 import Modal from '@/components/ui/Modal'
 import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
+import ImageUploader from '@/components/ui/ImageUploader'
 import { adminStore } from '@/lib/admin/store'
 import { type MenuItem } from '@/lib/data'
 import { useToast } from '@/components/ui/ToastProvider'
@@ -194,8 +195,7 @@ export default function AdminMenuPage() {
             <textarea id="dish-desc" rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={`${inputClass} resize-none`} placeholder="Brief description of the dish…" />
           </div>
           <div>
-            <label htmlFor="dish-image" className="block text-sm font-medium mb-1.5">Image URL</label>
-            <input id="dish-image" value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} className={inputClass} placeholder="https://…" />
+            <ImageUploader value={form.image} onChange={(image) => setForm({ ...form, image })} label="Dish Image" />
           </div>
           <div>
             <label htmlFor="dish-ingredients" className="block text-sm font-medium mb-1.5">Ingredients (comma-separated)</label>

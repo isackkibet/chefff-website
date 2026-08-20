@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import ImageUploader from '@/components/ui/ImageUploader'
 import Link from 'next/link'
 import { Plus, Pencil, Trash2, ExternalLink, FileText } from 'lucide-react'
 import AdminNav from '@/components/admin/AdminNav'
@@ -164,8 +165,7 @@ export default function AdminBlogPage() {
             <textarea id="post-excerpt" rows={3} value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} className={`${inputClass} resize-none`} placeholder="A brief summary of the post…" />
           </div>
           <div>
-            <label htmlFor="post-image" className="block text-sm font-medium mb-1.5">Cover Image URL</label>
-            <input id="post-image" value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} className={inputClass} placeholder="https://…" />
+            <ImageUploader value={form.image} onChange={(image) => setForm({ ...form, image })} label="Cover Image" />
           </div>
           <div>
             <label htmlFor="post-date" className="block text-sm font-medium mb-1.5">Publish Date</label>
