@@ -12,48 +12,51 @@
  * Replace with a proper backend before going live.
  */
 
-export const ADMIN_SESSION_KEY = 'chef_admin_session'
+export const ADMIN_SESSION_KEY = "chef_admin_session";
 
 export interface AdminSession {
-  email: string
-  role: 'ADMIN' | 'SUPER_ADMIN'
-  loginTime: number
+  email: string;
+  role: "ADMIN" | "SUPER_ADMIN";
+  loginTime: number;
 }
 
 /** Write session to localStorage (dev only, use secure HTTP-only cookies in prod) */
 export function setAdminSession(session: AdminSession) {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(session))
+  if (typeof window !== "undefined") {
+    localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(session));
   }
 }
 
 /** Read session */
 export function getAdminSession(): AdminSession | null {
-  if (typeof window === 'undefined') return null
+  if (typeof window === "undefined") return null;
   try {
-    const raw = localStorage.getItem(ADMIN_SESSION_KEY)
-    if (!raw) return null
-    const session = JSON.parse(raw) as AdminSession
+    const raw = localStorage.getItem(ADMIN_SESSION_KEY);
+    if (!raw) return null;
+    const session = JSON.parse(raw) as AdminSession;
     // Expire after 8 hours
     if (Date.now() - session.loginTime > 8 * 60 * 60 * 1000) {
-      clearAdminSession()
-      return null
+      clearAdminSession();
+      return null;
     }
-    return session
+    return session;
   } catch {
-    return null
+    return null;
   }
 }
 
 /** Clear session */
 export function clearAdminSession() {
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem(ADMIN_SESSION_KEY)
+  if (typeof window !== "undefined") {
+    localStorage.removeItem(ADMIN_SESSION_KEY);
   }
 }
 
 /** Mock credential check, replace with real DB lookup + bcrypt.compare() in production */
-export function checkAdminCredentials(email: string, password: string): boolean {
+export function checkAdminCredentials(
+  email: string,
+  password: string,
+): boolean {
   // DEMO ONLY, never store credentials in client-side code in production
-  return email === 'admin@chefharrizona.co.ke' && password === 'admin123'
+  return email === "admin@chefharrizona.co.ke" && password === "admin123";
 }

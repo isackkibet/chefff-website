@@ -1,22 +1,28 @@
-'use client'
+"use client";
 
-import { ShoppingCart } from 'lucide-react'
-import { useCart, type CartableItem } from '@/lib/cart'
-import { useToast } from '@/components/ui/ToastProvider'
+import { ShoppingCart } from "lucide-react";
+import { useCart, type CartableItem } from "@/lib/cart";
+import { useToast } from "@/components/ui/ToastProvider";
 
-export default function AddToCartButton({ item, size = 'sm' }: { item: CartableItem; size?: 'sm' | 'md' }) {
-  const { addItem, getQty, openCart } = useCart()
-  const { toast } = useToast()
+export default function AddToCartButton({
+  item,
+  size = "sm",
+}: {
+  item: CartableItem;
+  size?: "sm" | "md";
+}) {
+  const { addItem, getQty, openCart } = useCart();
+  const { toast } = useToast();
 
-  const qty = getQty(item.id)
+  const qty = getQty(item.id);
 
   function handleClick() {
-    addItem(item)
-    toast('success', `${item.name} added to your order. Asante!`)
-    openCart()
+    addItem(item);
+    toast("success", `${item.name} added to your order. Asante!`);
+    openCart();
   }
 
-  const sizeClass = size === 'md' ? 'px-5 py-2.5 text-sm' : 'px-4 py-2 text-sm'
+  const sizeClass = size === "md" ? "px-5 py-2.5 text-sm" : "px-4 py-2 text-sm";
 
   return (
     <button
@@ -25,7 +31,7 @@ export default function AddToCartButton({ item, size = 'sm' }: { item: CartableI
       aria-label={`Add ${item.name} to cart`}
     >
       <ShoppingCart size={14} aria-hidden="true" />
-      {qty > 0 ? `In Cart (${qty})` : 'Add to Cart'}
+      {qty > 0 ? `In Cart (${qty})` : "Add to Cart"}
     </button>
-  )
+  );
 }

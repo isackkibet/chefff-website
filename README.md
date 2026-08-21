@@ -59,13 +59,13 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-| Command             | Description                                        |
-| ------------------- | -------------------------------------------------- |
-| `npm run dev`       | Start the development server                       |
-| `npm run build`     | Build for production                               |
-| `npm run start`     | Start the production server                        |
-| `npm run lint`      | Run ESLint                                         |
-| `npm run db:init`   | Create/refresh the database schema in Neon         |
+| Command           | Description                                |
+| ----------------- | ------------------------------------------ |
+| `npm run dev`     | Start the development server               |
+| `npm run build`   | Build for production                       |
+| `npm run start`   | Start the production server                |
+| `npm run lint`    | Run ESLint                                 |
+| `npm run db:init` | Create/refresh the database schema in Neon |
 
 ## Key Configuration
 

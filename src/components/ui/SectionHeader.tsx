@@ -1,16 +1,22 @@
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils";
 
 interface SectionHeaderProps {
-  eyebrow?: string
-  title: string
-  subtitle?: string
-  centered?: boolean
-  className?: string
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  centered?: boolean;
+  className?: string;
 }
 
-export default function SectionHeader({ eyebrow, title, subtitle, centered = true, className }: SectionHeaderProps) {
+export default function SectionHeader({
+  eyebrow,
+  title,
+  subtitle,
+  centered = true,
+  className,
+}: SectionHeaderProps) {
   return (
-    <div className={cn('mb-12', centered && 'text-center', className)}>
+    <div className={cn("mb-12", centered && "text-center", className)}>
       {eyebrow && (
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[hsl(45_90%_52%)]">
           {eyebrow}
@@ -25,5 +31,5 @@ export default function SectionHeader({ eyebrow, title, subtitle, centered = tru
         </p>
       )}
     </div>
-  )
+  );
 }

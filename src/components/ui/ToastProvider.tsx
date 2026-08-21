@@ -1,29 +1,33 @@
-'use client'
+"use client";
 
-import { createContext, useCallback, useContext, useState } from 'react'
-import Toast, { type ToastData } from './Toast'
+import { createContext, useCallback, useContext, useState } from "react";
+import Toast, { type ToastData } from "./Toast";
 
 interface ToastContextValue {
-  toast: (type: ToastData['type'], message: string) => void
+  toast: (type: ToastData["type"], message: string) => void;
 }
 
-const ToastContext = createContext<ToastContextValue>({ toast: () => {} })
+const ToastContext = createContext<ToastContextValue>({ toast: () => {} });
 
 export function useToast() {
-  return useContext(ToastContext)
+  return useContext(ToastContext);
 }
 
-export default function ToastProvider({ children }: { children: React.ReactNode }) {
-  const [toasts, setToasts] = useState<ToastData[]>([])
+export default function ToastProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [toasts, setToasts] = useState<ToastData[]>([]);
 
-  const toast = useCallback((type: ToastData['type'], message: string) => {
-    const id = Math.random().toString(36).slice(2)
-    setToasts((prev) => [...prev, { id, type, message }])
-  }, [])
+  const toast = useCallback((type: ToastData["type"], message: string) => {
+    const id = Math.random().toString(36).slice(2);
+    setToasts((prev) => [...prev, { id, type, message }]);
+  }, []);
 
   const dismiss = useCallback((id: string) => {
-    setToasts((prev) => prev.filter((t) => t.id !== id))
-  }, [])
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  }, []);
 
   return (
     <ToastContext.Provider value={{ toast }}>
@@ -39,5 +43,5 @@ export default function ToastProvider({ children }: { children: React.ReactNode 
         ))}
       </div>
     </ToastContext.Provider>
-  )
+  );
 }

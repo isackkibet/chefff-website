@@ -2,19 +2,19 @@
  * Run once to create all tables in Neon.
  *   npx tsx scripts/migrate.ts
  */
-import { neon } from '@neondatabase/serverless'
-import * as dotenv from 'dotenv'
-import path from 'path'
+import { neon } from "@neondatabase/serverless";
+import * as dotenv from "dotenv";
+import path from "path";
 
-dotenv.config({ path: path.resolve(process.cwd(), '.env.local') })
+dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 
-const DATABASE_URL = process.env.DATABASE_URL
-if (!DATABASE_URL) throw new Error('DATABASE_URL is not set in .env.local')
+const DATABASE_URL = process.env.DATABASE_URL;
+if (!DATABASE_URL) throw new Error("DATABASE_URL is not set in .env.local");
 
-const sql = neon(DATABASE_URL)
+const sql = neon(DATABASE_URL);
 
 async function migrate() {
-  console.log('Running migrations…')
+  console.log("Running migrations…");
 
   await sql`
     DO $$ BEGIN
@@ -23,7 +23,7 @@ async function migrate() {
       );
     EXCEPTION WHEN duplicate_object THEN NULL;
     END $$;
-  `
+  `;
 
   await sql`
     CREATE TABLE IF NOT EXISTS bookings (
@@ -47,7 +47,7 @@ async function migrate() {
       created_at      TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
       updated_at      TIMESTAMPTZ  NOT NULL DEFAULT NOW()
     );
-  `
+  `;
 
   await sql`
     CREATE TABLE IF NOT EXISTS contact_messages (
@@ -60,7 +60,7 @@ async function migrate() {
       read       BOOLEAN      NOT NULL DEFAULT FALSE,
       created_at TIMESTAMPTZ  NOT NULL DEFAULT NOW()
     );
-  `
+  `;
 
   await sql`
     CREATE TABLE IF NOT EXISTS menu_items (
@@ -77,7 +77,7 @@ async function migrate() {
       chef_pick   BOOLEAN      NOT NULL DEFAULT FALSE,
       created_at  TIMESTAMPTZ  NOT NULL DEFAULT NOW()
     );
-  `
+  `;
 
   await sql`
     CREATE TABLE IF NOT EXISTS gallery_images (
@@ -88,7 +88,7 @@ async function migrate() {
       category   VARCHAR(40)  NOT NULL,
       created_at TIMESTAMPTZ  NOT NULL DEFAULT NOW()
     );
-  `
+  `;
 
   await sql`
     CREATE TABLE IF NOT EXISTS testimonials (
@@ -101,7 +101,7 @@ async function migrate() {
       date     VARCHAR(30)  NOT NULL,
       featured BOOLEAN      NOT NULL DEFAULT FALSE
     );
-  `
+  `;
 
   await sql`
     CREATE TABLE IF NOT EXISTS blog_posts (
@@ -117,7 +117,7 @@ async function migrate() {
       featured     BOOLEAN      NOT NULL DEFAULT FALSE,
       draft        BOOLEAN      NOT NULL DEFAULT FALSE
     );
-  `
+  `;
 
   await sql`
     CREATE TABLE IF NOT EXISTS site_settings (
@@ -125,20 +125,23 @@ async function migrate() {
       key   VARCHAR(80) NOT NULL UNIQUE,
       value TEXT        NOT NULL
     );
-  `
+  `;
 
   // Index for fast booking lookups
   await sql`
     CREATE INDEX IF NOT EXISTS idx_bookings_status    ON bookings(status);
-  `
+  `;
   await sql`
     CREATE INDEX IF NOT EXISTS idx_bookings_created   ON bookings(created_at DESC);
-  `
+  `;
   await sql`
     CREATE INDEX IF NOT EXISTS idx_contacts_created   ON contact_messages(created_at DESC);
-  `
+  `;
 
-  console.log('✓ All tables created successfully.')
+  console.log("✓ All tables created successfully.");
 }
 
-migrate().catch((err) => { console.error(err); process.exit(1) })
+migrate().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
