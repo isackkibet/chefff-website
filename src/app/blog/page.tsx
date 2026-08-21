@@ -8,7 +8,7 @@ import { blogPosts } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'Blog | Recipes, Chef Tips & Culinary Stories',
-  description: 'Read Chef Harrizona\'s blog — recipes, culinary tips, chef stories and guides to private dining and Kenyan cuisine.',
+  description: 'Read Chef Harrizona\'s blog for recipes, culinary tips, chef stories and guides to private dining and Kenyan cuisine.',
 }
 
 function formatDate(d: string) {

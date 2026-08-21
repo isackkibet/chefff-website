@@ -1,6 +1,6 @@
 /**
  * Seeds the DB with the static data from lib/data.ts
- * Safe to run multiple times — skips existing records.
+ * Safe to run multiple times, skips existing records.
  *   npx tsx scripts/seed.ts
  */
 import { neon } from '@neondatabase/serverless'
@@ -75,7 +75,7 @@ async function seed() {
       ingredients: '["Lamb mince","Peas","Coriander","Pastry","Tamarind"]',
       allergens: '["Gluten"]', dietary: '["Spicy"]' },
     { name: 'Nyama Choma Platter',           category: 'Chef Specials', price: 3600, chef_pick: true, available: true,
-      description: "Chef Harrizona's take on a Kenyan classic — slow-charred goat, kachumbari, ugali crisps and house pepper sauce.",
+      description: "Chef Harrizona's take on a Kenyan classic: slow-charred goat, kachumbari, ugali crisps and house pepper sauce.",
       image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&q=80',
       ingredients: '["Goat","Tomatoes","Onions","Coriander","Ugali","Chillies"]',
       allergens: '[]', dietary: '["Gluten Free","Dairy Free"]' },
@@ -96,13 +96,13 @@ async function seed() {
     { name: 'Sarah M.', role: 'Private Dinner Guest', rating: 5, service: 'Private Dining', date: 'June 2026', featured: true,
       text: 'Chef Harrizona transformed our anniversary into something truly magical. Every course was a masterpiece and the attention to our preferences was exceptional.' },
     { name: 'James K.', role: 'Corporate Client', rating: 5, service: 'Corporate Catering', date: 'May 2026', featured: true,
-      text: 'We hired Chef Harrizona for our annual board dinner. The food and service were outstanding — our guests are still talking about it months later.' },
+      text: 'We hired Chef Harrizona for our annual board dinner. The food and service were outstanding, and our guests are still talking about it months later.' },
     { name: 'Amina & David', role: 'Newly-weds', rating: 5, service: 'Wedding Catering', date: 'April 2026', featured: true,
       text: 'Our wedding menu was absolutely perfect. The tasting session was fun and professional, and on the day everything was flawless. Highly recommend.' },
     { name: 'Grace W.', role: 'Cooking Class Student', rating: 5, service: 'Cooking Class', date: 'March 2026', featured: false,
       text: 'I signed up for the private cooking class as a birthday gift to myself. Best decision ever. Chef Harrizona is incredibly patient and knowledgeable.' },
     { name: 'Robert O.', role: 'Birthday Party Host', rating: 5, service: 'Private Events', date: 'February 2026', featured: false,
-      text: "We had 30 guests for my wife's 40th and not a single complaint — only compliments. The nyama choma platter was a show-stopper." },
+      text: "We had 30 guests for my wife's 40th and not a single complaint, only compliments. The nyama choma platter was a show-stopper." },
     { name: 'Linda N.', role: 'Meal Prep Client', rating: 5, service: 'Meal Preparation', date: 'January 2026', featured: false,
       text: 'The weekly meal prep service has completely changed how I eat. Healthy, delicious and perfectly portioned. Worth every shilling.' },
   ]
@@ -123,11 +123,11 @@ async function seed() {
       image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80',
       category: 'Chef Tips', published_at: '2026-08-10', read_time: 5, featured: true },
     { slug: 'how-to-plan-a-private-dinner-party', title: 'How to Plan a Private Dinner Party',
-      excerpt: 'Everything you need to know to host a flawless private dinner — from invitations to the perfect closing course.',
+      excerpt: 'Everything you need to know to host a flawless private dinner, from invitations to the perfect closing course.',
       image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80',
       category: 'Events', published_at: '2026-07-22', read_time: 7, featured: true },
     { slug: 'kenyan-ingredients-every-chef-should-know', title: 'Kenyan Ingredients Every Chef Should Know',
-      excerpt: 'From managu to kunde, arrow roots to fresh tilapia — the building blocks of a modern Kenyan kitchen.',
+      excerpt: 'From managu to kunde, arrow roots to fresh tilapia, these are the building blocks of a modern Kenyan kitchen.',
       image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&q=80',
       category: 'Culinary Stories', published_at: '2026-07-05', read_time: 6, featured: false },
     { slug: 'the-art-of-the-tasting-menu', title: 'The Art of the Tasting Menu',

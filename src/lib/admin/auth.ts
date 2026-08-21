@@ -20,7 +20,7 @@ export interface AdminSession {
   loginTime: number
 }
 
-/** Write session to localStorage (dev only — use secure HTTP-only cookies in prod) */
+/** Write session to localStorage (dev only, use secure HTTP-only cookies in prod) */
 export function setAdminSession(session: AdminSession) {
   if (typeof window !== 'undefined') {
     localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(session))
@@ -52,8 +52,8 @@ export function clearAdminSession() {
   }
 }
 
-/** Mock credential check — replace with real DB lookup + bcrypt.compare() in production */
+/** Mock credential check, replace with real DB lookup + bcrypt.compare() in production */
 export function checkAdminCredentials(email: string, password: string): boolean {
-  // DEMO ONLY — never store credentials in client-side code in production
+  // DEMO ONLY, never store credentials in client-side code in production
   return email === 'admin@chefharrizona.co.ke' && password === 'admin123'
 }

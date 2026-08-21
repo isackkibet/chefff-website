@@ -9,7 +9,7 @@ import { ButtonLink } from '@/components/ui/Button'
 import Logo from '@/components/ui/Logo'
 import CartButton from '@/components/cart/CartButton'
 
-// Primary nav — shown on desktop
+// Primary nav, shown on desktop
 const primaryLinks = [
   { label: 'Home',        href: '/' },
   { label: 'About',       href: '/about' },
@@ -22,7 +22,7 @@ const primaryLinks = [
   { label: 'Contact',     href: '/contact' },
 ]
 
-// All links — used in mobile drawer
+// All links, used in mobile drawer
 const allLinks = [
   { label: 'Home',        href: '/' },
   { label: 'About',       href: '/about' },
@@ -74,7 +74,7 @@ export default function Navbar() {
           <Link
             href="/admin"
             className="flex items-center gap-2.5 shrink-0 group"
-            aria-label="Chef Harrizona — Admin"
+            aria-label="Chef Harrizona Admin"
           >
             <Logo size={38} className="shadow-md group-hover:scale-105 transition-transform" />
             <span className="hidden sm:flex flex-col leading-none">
@@ -165,7 +165,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2 shrink-0">
             <CartButton />
 
-            {/* Meal kits pill — visible on desktop */}
+            {/* Meal kits pill, visible on desktop */}
             <Link
               href="/meal-kits"
               className="hidden xl:inline-flex items-center gap-1.5 rounded-full border border-[hsl(45_90%_52%/0.4)] px-3 py-1.5 text-xs font-semibold text-[hsl(45_90%_52%)] hover:bg-[hsl(45_90%_52%/0.08)] transition-colors"

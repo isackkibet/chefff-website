@@ -20,7 +20,7 @@ const origin = typeof window !== 'undefined' ? window.location.origin : ''
   }
 
   const orderMessage = [
-    '*ORDER — Chef Harrizona*',
+    '*ORDER: Chef Harrizona*',
     '',
     ...items.flatMap((i, idx) => [
       `*${idx + 1}. ${i.name}*`,

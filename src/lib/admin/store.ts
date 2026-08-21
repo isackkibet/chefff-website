@@ -1,5 +1,5 @@
 /**
- * Admin data store — mock in-memory state for demo purposes.
+ * Admin data store, mock in-memory state for demo purposes.
  * In production every write/read would go through API routes
  * backed by PostgreSQL + Prisma.
  */
@@ -44,7 +44,7 @@ export const seedBookings: Booking[] = [
     phone: '+254 711 333 444', eventType: 'Corporate Event', eventDate: '2026-09-05',
     preferredTime: '12:30', guestCount: 40, location: 'Westlands, Nairobi',
     budgetRange: 'KES 100,000 – 250,000', cuisinePrefs: 'International', status: 'REVIEWING',
-    createdAt: '2026-08-17T14:05:00Z', notes: 'Board lunch — needs full service staff',
+    createdAt: '2026-08-17T14:05:00Z', notes: 'Board lunch, needs full service staff',
   },
   {
     id: 'b3', refNumber: 'CHEF-1026', fullName: 'Amina & David Otieno', email: 'amina@gmail.com',
@@ -120,5 +120,5 @@ class AdminStore {
   }
 }
 
-// Singleton — in production this is replaced by SWR/React Query + API routes
+// Singleton, in production this is replaced by SWR/React Query + API routes
 export const adminStore = new AdminStore()

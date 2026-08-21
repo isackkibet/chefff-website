@@ -6,7 +6,7 @@ import { type ButtonHTMLAttributes, type AnchorHTMLAttributes, forwardRef } from
 
 // ─── Style maps ──────────────────────────────────────────────────────────────
 const variantClasses = {
-  primary: 'bg-gradient-to-r from-[hsl(38_85%_38%)] via-[hsl(45_90%_52%)] to-[hsl(45_95%_68%)] text-[hsl(0_0%_10%)] hover:brightness-110 active:scale-95 shadow-lg shadow-[hsl(45_90%_52%/0.25)]',
+  primary: 'bg-[hsl(45_90%_52%)] text-[hsl(0_0%_10%)] hover:bg-[hsl(45_85%_58%)] active:scale-95',
   outline: 'border-2 border-[hsl(45_90%_52%)] text-[hsl(45_90%_52%)] hover:bg-[hsl(45_90%_52%/0.1)] active:scale-95',
   ghost:   'text-[hsl(42_30%_94%)] hover:bg-[hsl(0_0%_100%/0.08)] active:scale-95',
   gold:    'bg-[hsl(45_90%_52%)] text-[hsl(0_0%_10%)] hover:bg-[hsl(45_95%_60%)] active:scale-95 shadow-md',
@@ -22,7 +22,7 @@ const baseClass =
 type Variant = keyof typeof variantClasses
 type Size = keyof typeof sizeClasses
 
-// ─── <Button> — plain <button> ───────────────────────────────────────────────
+// ─── <Button>, plain <button> ───────────────────────────────────────────────
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant
   size?: Size
@@ -48,7 +48,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = 'Button'
 export default Button
 
-// ─── <ButtonLink> — Next.js Link or <a> with button styles ───────────────────
+// ─── <ButtonLink>, Next.js Link or <a> with button styles ───────────────────
 export interface ButtonLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string
   variant?: Variant

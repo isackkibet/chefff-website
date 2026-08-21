@@ -118,7 +118,7 @@ export default function AdminAlerts() {
             <div className="max-h-[360px] overflow-y-auto">
               {items.length === 0 ? (
                 <p className="px-4 py-8 text-center text-sm text-[hsl(0_0%_45%)]">
-                  All caught up — no new bookings or messages.
+                  All caught up. No new bookings or messages.
                 </p>
               ) : (
                 <ul className="divide-y divide-[hsl(0_0%_14%)]" role="list">

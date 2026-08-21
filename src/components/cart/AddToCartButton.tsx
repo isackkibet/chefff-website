@@ -12,7 +12,7 @@ export default function AddToCartButton({ item, size = 'sm' }: { item: CartableI
 
   function handleClick() {
     addItem(item)
-    toast('success', `${item.name} added to your order — asante!`)
+    toast('success', `${item.name} added to your order. Asante!`)
     openCart()
   }
 

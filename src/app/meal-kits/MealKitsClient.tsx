@@ -314,7 +314,7 @@ export default function MealKitsClient() {
               onClick={() => { addToCart(selected); setSelected(null) }}
             >
               <ShoppingCart size={18} aria-hidden="true" />
-              Add to Cart — KSh {selected.price.toLocaleString()}
+              Add to Cart: KSh {selected.price.toLocaleString()}
             </Button>
           </div>
         )}

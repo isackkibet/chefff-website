@@ -3,7 +3,7 @@ import MenuClient from './MenuClient'
 
 export const metadata: Metadata = {
   title: 'Menu | Signature Dishes & Culinary Creations',
-  description: 'Browse Chef Harrizona\'s full menu — starters, mains, desserts, drinks and chef specials. Filter by dietary requirements.',
+  description: 'Browse Chef Harrizona\'s full menu of starters, mains, desserts, drinks and chef specials. Filter by dietary requirements.',
 }
 
 export default function MenuPage() {
@@ -17,7 +17,7 @@ export default function MenuPage() {
           </h1>
           <div className="section-divider mx-auto mb-8" />
           <p className="text-lg text-[hsl(0_0%_65%)] leading-relaxed max-w-xl mx-auto">
-            Every dish is crafted from the finest seasonal ingredients. Menus for private events are fully customised — this is Chef Harrizona's signature collection.
+            Every dish is crafted from the finest seasonal ingredients. Menus for private events are fully customised, and this is Chef Harrizona's signature collection.
           </p>
         </div>
       </section>

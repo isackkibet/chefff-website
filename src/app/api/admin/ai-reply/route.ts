@@ -14,7 +14,7 @@ const AI_MODEL = process.env.AI_MODEL ?? 'gpt-4o-mini'
 
 const systemPrompt = `You are the booking assistant for Chef Harrizona, a private chef in Nairobi, Kenya offering private dining, catering, cooking classes and weekly meal preparation.
 
-Write a warm, professional reply from Chef Harrizona. Keep it friendly, concise and natural — like a real message, not a marketing letter. Acknowledge what the client said, confirm the next step (a call/WhatsApp chat to discuss details within 24 hours) and sign off simply. No placeholders like [Name]. Use plain text with minimal line breaks.`
+Write a warm, professional reply from Chef Harrizona. Keep it friendly, concise and natural, like a real message rather than a marketing letter. Acknowledge what the client said, confirm the next step (a call/WhatsApp chat to discuss details within 24 hours) and sign off simply. No placeholders like [Name]. Use plain text with minimal line breaks. Never use em dashes.`
 
 // Fallback used when no AI key is configured, so the feature still works.
 function fallbackReply(context: 'contact' | 'booking', name: string, subject: string, message: string): string {
@@ -33,7 +33,7 @@ Best,
 Chef Harrizona`
 }
 
-// POST /api/admin/ai-reply — draft a reply to a client message using AI.
+// POST /api/admin/ai-reply, draft a reply to a client message using AI.
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()

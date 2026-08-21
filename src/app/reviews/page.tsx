@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: "Reviews | What Chef Harrizona's Guests Say",
-  description: "Real testimonials from Chef Harrizona's guests — private dining, wedding catering, corporate events and cooking classes.",
+  description: "Real testimonials from Chef Harrizona's guests: private dining, wedding catering, corporate events and cooking classes.",
 }
 
 export default async function ReviewsPage() {

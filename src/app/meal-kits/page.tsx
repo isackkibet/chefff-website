@@ -5,7 +5,7 @@ import MealKitsClient from './MealKitsClient'
 export const metadata: Metadata = {
   title: 'Authentic Kenyan Meal Kits | Chef Harrizona',
   description:
-    "Bring Chef Harrizona's expertise to your kitchen. Fresh ingredients, traditional Kenyan recipes and step-by-step guidance — delivered to your door in Nairobi.",
+    "Bring Chef Harrizona's expertise to your kitchen. Fresh ingredients, traditional Kenyan recipes and step-by-step guidance delivered to your door in Nairobi.",
 }
 
 export default function MealKitsPage() {

@@ -3,7 +3,7 @@ import LegalPage from '@/components/layout/LegalPage'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | Chef Harrizona',
-  description: 'Privacy policy for chefharrizona.co.ke — how we collect, use and protect your personal information.',
+  description: 'Privacy policy for chefharrizona.co.ke: how we collect, use and protect your personal information.',
 }
 
 export default function PrivacyPolicyPage() {

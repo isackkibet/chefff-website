@@ -111,21 +111,6 @@ h1, h2, h3, h4, h5, h6 {
   );
 }
 
-/* Drifting golden glow behind hero content */
-.glow-anim {
-  background:
-    radial-gradient(circle at 25% 30%, hsl(45 90% 52% / 0.30), transparent 45%),
-    radial-gradient(circle at 75% 75%, hsl(38 85% 38% / 0.28), transparent 45%);
-  background-size: 200% 200%;
-  mix-blend-mode: screen;
-  animation: glow-drift 12s ease-in-out infinite;
-}
-@keyframes glow-drift {
-  0%   { background-position: 0% 0%; opacity: 0.65; }
-  50%  { background-position: 100% 100%; opacity: 1; }
-  100% { background-position: 0% 0%; opacity: 0.65; }
-}
-
 .section-divider {
   width: 64px;
   height: 3px;
@@ -146,19 +131,10 @@ h1, h2, h3, h4, h5, h6 {
   from { opacity: 0; transform: scale(0.95); }
   to   { opacity: 1; transform: scale(1); }
 }
-@keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position:  200% center; }
-}
-@keyframes pulse-gold {
-  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--gold) / 0.4); }
-  50%       { box-shadow: 0 0 0 12px hsl(var(--gold) / 0); }
-}
 
 .animate-fade-up  { animation: fade-up  0.6s ease both; }
 .animate-fade-in  { animation: fade-in  0.5s ease both; }
 .animate-scale-in { animation: scale-in 0.4s ease both; }
-.animate-pulse-gold { animation: pulse-gold 2s infinite; }
 
 .delay-100 { animation-delay: 0.1s; }
 .delay-200 { animation-delay: 0.2s; }
@@ -171,8 +147,8 @@ h1, h2, h3, h4, h5, h6 {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 48px hsl(var(--gold) / 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px hsl(0 0% 0% / 0.35);
 }
 
 /* ─── Image overlay helper ───────────────────────────────────── */

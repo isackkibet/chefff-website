@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { galleryImages } from '@/lib/data'
 
 // Rotating hero order: original photo first, then the chef "people" photos,
-// then the dishes — people first keeps it personal and interactive.
+// then the dishes, people first keeps it personal and interactive.
 const heroSlides = [
   {
     id: 'hero-corporate',
@@ -30,7 +30,6 @@ function peopleRank(alt: string) {
 export default function HeroBackground() {
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
-  const [glow, setGlow] = useState({ x: 50, y: 30, visible: false })
 
   useEffect(() => {
     if (paused) return
@@ -48,14 +47,6 @@ export default function HeroBackground() {
       aria-hidden="true"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
-      onMouseMove={(e) => {
-        const rect = e.currentTarget.getBoundingClientRect()
-        setGlow({
-          x: ((e.clientX - rect.left) / rect.width) * 100,
-          y: ((e.clientY - rect.top) / rect.height) * 100,
-          visible: true,
-        })
-      }}
     >
       {/* Slides */}
       {heroSlides.map((img, i) => (
@@ -84,25 +75,6 @@ export default function HeroBackground() {
       {/* Dark overlay for text readability */}
       <div className="hero-overlay absolute inset-0 pointer-events-none" aria-hidden="true" />
 
-      {/* Drifting golden glow */}
-      <div className="glow-anim absolute inset-0 pointer-events-none" aria-hidden="true" />
-
-      {/* Cursor-following glow — the background reacts to your pointer */}
-      <div
-        className="pointer-events-none absolute inset-0 transition-opacity duration-500"
-        style={{ opacity: glow.visible ? 1 : 0 }}
-        aria-hidden="true"
-      >
-        <div
-          className="absolute h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl transition-transform duration-200 ease-out"
-          style={{
-            left: `${glow.x}%`,
-            top: `${glow.y}%`,
-            background: 'radial-gradient(circle, hsl(45 90% 52% / 0.35), transparent 60%)',
-          }}
-        />
-      </div>
-
       {/* Interactive image dots */}
       <div className="absolute bottom-24 inset-x-0 flex justify-center gap-2 z-10">
         {heroSlides.map((img, i) => (
@@ -112,7 +84,7 @@ export default function HeroBackground() {
             aria-label={`Show ${img.alt}`}
             className={`h-2 rounded-full transition-all duration-300 ${
               i === active
-                ? 'w-7 bg-[hsl(45_90%_52%)] shadow-[0_0_12px_hsl(45_90%_52%)]'
+                ? 'w-7 bg-[hsl(45_90%_52%)]'
                 : 'w-2 bg-white/40 hover:bg-white/80'
             }`}
           />

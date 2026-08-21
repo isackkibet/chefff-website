@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { randomUUID } from 'crypto'
 import { ensureReviewsSchema, sql } from '@/lib/db'
 
-// GET /api/admin/reviews — list all customer reviews, newest first
+// GET /api/admin/reviews, list all customer reviews, newest first
 export async function GET() {
   try {
     await ensureReviewsSchema()
@@ -18,7 +18,7 @@ export async function GET() {
   }
 }
 
-// PATCH /api/admin/reviews — approve or unapprove a review
+// PATCH /api/admin/reviews, approve or unapprove a review
 export async function PATCH(req: NextRequest) {
   try {
     const body = await req.json()
@@ -40,7 +40,7 @@ export async function PATCH(req: NextRequest) {
   }
 }
 
-// DELETE /api/admin/reviews?id=... — permanently remove a review
+// DELETE /api/admin/reviews?id=..., permanently remove a review
 export async function DELETE(req: NextRequest) {
   try {
     const id = req.nextUrl.searchParams.get('id')

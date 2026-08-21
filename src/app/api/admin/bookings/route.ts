@@ -4,7 +4,7 @@ import { bookings } from '@/lib/db/schema'
 import { desc, eq } from 'drizzle-orm'
 import { z } from 'zod'
 
-// GET /api/admin/bookings — list all, newest first
+// GET /api/admin/bookings, list all, newest first
 export async function GET() {
   try {
     const rows = await db
@@ -26,7 +26,7 @@ const patchSchema = z.object({
   quotedAmount:  z.number().int().optional(),
 })
 
-// PATCH /api/admin/bookings — update status / notes / quote
+// PATCH /api/admin/bookings, update status / notes / quote
 export async function PATCH(req: NextRequest) {
   try {
     const body = await req.json()

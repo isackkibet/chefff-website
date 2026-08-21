@@ -7,7 +7,7 @@ import { stats } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'About Chef Harrizona | His Story, Philosophy & Culinary Journey',
-  description: 'Learn about Chef Harrizona — his culinary journey, training, philosophy and passion for creating exceptional food experiences in Nairobi.',
+  description: 'Learn about Chef Harrizona: his culinary journey, training, philosophy and passion for creating exceptional food experiences in Nairobi.',
 }
 
 const specialties = [
@@ -20,15 +20,15 @@ const specialties = [
 ]
 
 const timeline = [
-  { year: '2022', title: 'Intern & Casual Chef — Nairobi Safari Club', desc: 'At Swiss-Belhotel International. In charge of breakfast, pastry and à la carte, with solid experience in the salad section. Later became a casual chef.' },
-  { year: '2023', title: 'Commis Chef — Guru Nanak Hospital', desc: 'Planned and executed daily menus for patients and staff, collaborating with nutritionists to produce nutritious meals.' },
-  { year: '2022 – Present', title: 'Diploma in Food & Beverage Management', desc: 'A student of Nairobi Technical Training Institute, pursuing a Diploma in Food and Beverage Management in both production and service — 1st year: Credit, 2nd year: Distinction.' },
-  { year: 'Present', title: 'Commis Chef — Stedmak Gardens', desc: 'Outside catering and events. Responsible for planning, preparation and production of menus during functions, events and outside caterers; assisted the head chef in food preparation, cooking and plating while keeping the kitchen clean and organised.' },
+  { year: '2022', title: 'Intern & Casual Chef, Nairobi Safari Club', desc: 'At Swiss-Belhotel International. In charge of breakfast, pastry and à la carte, with solid experience in the salad section. Later became a casual chef.' },
+  { year: '2023', title: 'Commis Chef, Guru Nanak Hospital', desc: 'Planned and executed daily menus for patients and staff, collaborating with nutritionists to produce nutritious meals.' },
+  { year: '2022 – Present', title: 'Diploma in Food & Beverage Management', desc: 'A student of Nairobi Technical Training Institute, pursuing a Diploma in Food and Beverage Management in both production and service. 1st year: Credit, 2nd year: Distinction.' },
+  { year: 'Present', title: 'Commis Chef, Stedmak Gardens', desc: 'Outside catering and events. Responsible for planning, preparation and production of menus during functions, events and outside caterers; assisted the head chef in food preparation, cooking and plating while keeping the kitchen clean and organised.' },
 ]
 
 const values = [
   { Icon: Utensils, title: 'Quality First',       desc: 'Every ingredient is hand-selected. Nothing leaves the kitchen unless it meets an exacting standard.' },
-  { Icon: Heart,    title: 'Personal Touch',       desc: 'Every menu, every event and every dish is designed specifically for the guest — never a template.' },
+  { Icon: Heart,    title: 'Personal Touch',       desc: 'Every menu, every event and every dish is designed specifically for the guest, never a template.' },
   { Icon: BookOpen, title: 'Continuous Learning',  desc: 'Culinary knowledge evolves. Chef Harrizona is always exploring new techniques, ingredients and traditions.' },
   { Icon: Award,    title: 'Local Pride',           desc: 'Kenyan ingredients, Kenyan stories. Elevating African cuisine on every plate.' },
 ]
@@ -74,13 +74,13 @@ export default function AboutPage() {
             <h2 className="text-2xl sm:text-3xl font-bold mb-6">A Passion Forged in the Kitchen</h2>
             <div className="space-y-4 text-[hsl(0_0%_65%)] leading-relaxed">
               <p>
-                Chef Harrizona grew up watching his grandmother cook traditional Kenyan dishes over an open fire — every meal a deliberate act of love. That early connection between food, family and memory became the foundation of everything he does today.
+                Chef Harrizona grew up watching his grandmother cook traditional Kenyan dishes over an open fire, where every meal was a deliberate act of love. That early connection between food, family and memory became the foundation of everything he does today.
               </p>
               <p>
-                After formal culinary training in classical French and continental cuisine, Harrizona spent several years working across Nairobi's most respected kitchens, absorbing technique, discipline and the importance of precision. But it was private dining — cooking directly for individuals and families in their own spaces — where he truly found his calling.
+                After formal culinary training in classical French and continental cuisine, Harrizona spent several years working across Nairobi's most respected kitchens, absorbing technique, discipline and the importance of precision. But it was private dining, cooking directly for individuals and families in their own spaces, where he truly found his calling.
               </p>
               <p>
-                Today, Chef Harrizona is known for his distinctive approach: marrying classical European technique with the bold, honest flavours of East African cuisine. The result is food that feels both elevated and deeply personal — refined without being cold, technically brilliant without losing soul.
+                Today, Chef Harrizona is known for his distinctive approach: marrying classical European technique with the bold, honest flavours of East African cuisine. The result is food that feels both elevated and deeply personal, refined without being cold and technically brilliant without losing soul.
               </p>
               <p>
                 Every menu he creates starts with a conversation. What does the occasion mean to you? What flavours bring you joy? What are your guests' stories? Only then does he begin to cook.

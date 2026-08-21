@@ -3,7 +3,7 @@ import { db } from '@/lib/db/client'
 import { contactMessages } from '@/lib/db/schema'
 import { desc, eq } from 'drizzle-orm'
 
-// GET /api/admin/contact — list all messages newest first
+// GET /api/admin/contact, list all messages newest first
 export async function GET() {
   try {
     const rows = await db
@@ -17,7 +17,7 @@ export async function GET() {
   }
 }
 
-// PATCH /api/admin/contact — mark a message as read/unread
+// PATCH /api/admin/contact, mark a message as read/unread
 export async function PATCH(req: NextRequest) {
   try {
     const body = await req.json()

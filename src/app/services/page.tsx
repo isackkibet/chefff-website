@@ -48,7 +48,7 @@ export default function ServicesPage() {
       <section className="pb-10 px-4 sm:px-6 lg:px-8" aria-label="Priced service packages">
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="Fixed Pricing" title="Ready-to-Order Services" centered={false}
-            subtitle="Straightforward pricing — order directly or enquire for custom quantities." />
+            subtitle="Straightforward pricing. Order directly or enquire for custom quantities." />
 
           <div className="grid sm:grid-cols-2 gap-6 mb-6">
             {pricedServices.map((service) => {

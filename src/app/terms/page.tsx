@@ -25,7 +25,7 @@ export default function TermsPage() {
       <p>Clients must disclose all dietary requirements and allergies at the time of booking. While every effort is made to accommodate requirements, Chef Harrizona cannot guarantee a completely allergen-free environment and does not accept liability for undisclosed allergies.</p>
 
       <h2>6. Intellectual Property</h2>
-      <p>All content on this website — including text, images, recipes and branding — is the property of Chef Harrizona and may not be reproduced without written permission.</p>
+      <p>All content on this website, including text, images, recipes and branding, is the property of Chef Harrizona and may not be reproduced without written permission.</p>
 
       <h2>7. Limitation of Liability</h2>
       <p>Chef Harrizona's liability for any claim arising from our services shall not exceed the value of the booking in question. We are not liable for indirect or consequential losses.</p>

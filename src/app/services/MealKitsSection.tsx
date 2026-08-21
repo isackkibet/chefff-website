@@ -42,7 +42,7 @@ export default function MealKitsSection() {
         <SectionHeader
           eyebrow="Harrizona Cullinaries"
           title="Authentic Kenyan Meal Kits"
-          subtitle="Bring Chef Harrizona's expertise to your kitchen. Fresh ingredients, traditional recipes, and step-by-step guidance — delivered to your door."
+          subtitle="Bring Chef Harrizona's expertise to your kitchen. Fresh ingredients, traditional recipes, and step-by-step guidance delivered to your door."
         />
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" role="list">

@@ -60,17 +60,17 @@ export default async function BlogPostPage({ params }: Props) {
             <Image src={post.image} alt={post.title} fill className="object-cover" priority sizes="(max-width: 900px) 100vw, 896px" />
           </div>
 
-          {/* Article body — placeholder until real content is provided */}
+          {/* Article body, placeholder until real content is provided */}
           <div className="prose prose-invert max-w-none text-[hsl(0_0%_65%)] leading-relaxed space-y-5">
             <p className="text-lg text-[hsl(42_30%_85%)]">{post.excerpt}</p>
             <p>
               This post is a placeholder. When real article content is provided, it replaces this section. The structure, metadata, SEO tags and image optimisation are already in place.
             </p>
             <p>
-              Chef Harrizona's blog covers recipes, culinary techniques, event planning guides, Kenyan ingredient spotlights and personal stories from the kitchen. Each post is written to be genuinely useful — no filler.
+              Chef Harrizona's blog covers recipes, culinary techniques, event planning guides, Kenyan ingredient spotlights and personal stories from the kitchen. Each post is written to be genuinely useful, with no filler.
             </p>
             <blockquote className="border-l-4 border-[hsl(45_90%_52%)] pl-5 italic text-[hsl(42_30%_80%)]">
-              "Food is more than a meal. It is an experience, a memory and a way of bringing people together." — Chef Harrizona
+              "Food is more than a meal. It is an experience, a memory and a way of bringing people together." Chef Harrizona
             </blockquote>
           </div>
 

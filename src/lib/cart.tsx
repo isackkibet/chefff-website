@@ -41,7 +41,7 @@ export default function CartProvider({ children }: { children: React.ReactNode }
   const [items, setItems] = useState<CartItem[]>([])
   const [isOpen, setIsOpen] = useState(false)
 
-  // Restore the saved cart after mount only — keeps SSR and first client render
+  // Restore the saved cart after mount only, keeps SSR and first client render
   // identical (empty cart), avoiding hydration mismatches.
   useEffect(() => {
     try {

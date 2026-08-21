@@ -30,7 +30,7 @@ export default function EventsPage() {
           </h1>
           <div className="section-divider mx-auto mb-8" />
           <p className="text-lg text-[hsl(0_0%_65%)] leading-relaxed">
-            From intimate pop-up dinners to group cooking classes — join Chef Harrizona at one of his upcoming events.
+            From intimate pop-up dinners to group cooking classes, join Chef Harrizona at one of his upcoming events.
           </p>
         </div>
       </section>

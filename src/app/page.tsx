@@ -162,7 +162,7 @@ export default async function HomePage() {
           <SectionHeader
             eyebrow="Signature Dishes"
             title="Chef's Finest Creations"
-            subtitle="Each dish is a story — crafted with the finest ingredients and years of culinary expertise."
+            subtitle="Each dish is a story, crafted with the finest ingredients and years of culinary expertise."
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredDishes.map((dish) => (
@@ -247,7 +247,7 @@ export default async function HomePage() {
           <SectionHeader
             eyebrow="Guest Reviews"
             title="What Our Guests Say"
-            subtitle="Real experiences from real guests — no manufactured reviews."
+            subtitle="Real experiences from real guests, with no manufactured reviews."
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredTestimonials.map((t) => (
@@ -281,7 +281,7 @@ export default async function HomePage() {
             <span className="text-gold-gradient">Unforgettable</span>
           </h2>
           <p className="text-[hsl(0_0%_65%)] text-lg mb-10 max-w-xl mx-auto">
-            Whether it's an intimate dinner for two or a wedding for 200 — get in touch and let Chef Harrizona bring the experience to you.
+            Whether it's an intimate dinner for two or a wedding for 200, get in touch and let Chef Harrizona bring the experience to you.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <ButtonLink href="/book" size="lg" variant="primary">

@@ -185,9 +185,9 @@ export default function AdminSettingsPage() {
                   <h2 className="font-semibold mb-2">Security Reminders</h2>
                   <ul className="text-sm text-[hsl(0_0%_55%)] space-y-1.5">
                     <li>• Change the demo admin password before going live</li>
-                    <li>• Store all secrets in environment variables — never in code</li>
+                    <li>• Store all secrets in environment variables, never in code</li>
                     <li>• Enable HTTPS on your production domain</li>
-                    <li>• The current auth uses localStorage (demo only) — replace with secure HTTP-only sessions in production</li>
+                    <li>• The current auth uses localStorage (demo only), replace with secure HTTP-only sessions in production</li>
                     <li>• Back up your database regularly</li>
                   </ul>
                 </div>

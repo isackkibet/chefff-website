@@ -51,7 +51,7 @@ export default function AdminTestimonialsPage() {
       })
       if (!res.ok) throw new Error('Failed to update')
       await loadReviews()
-      toast('success', approved ? 'Review approved — now live on the site' : 'Review unapproved — hidden from the site')
+      toast('success', approved ? 'Review approved, now live on the site' : 'Review unapproved, hidden from the site')
     } catch {
       toast('error', 'Could not update review')
     }
@@ -99,7 +99,7 @@ export default function AdminTestimonialsPage() {
               </div>
             ) : (
               <>
-                {[{ title: `Pending Approval (${pending.length})`, data: pending }, { title: `Approved — Live (${approved.length})`, data: approved }].map(({ title, data }) => (
+                {[{ title: `Pending Approval (${pending.length})`, data: pending }, { title: `Approved and Live (${approved.length})`, data: approved }].map(({ title, data }) => (
                   data.length > 0 && (
                     <div key={title} className="mb-10">
                       <h2 className="text-lg font-semibold mb-4">{title}</h2>
