@@ -25,7 +25,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 const eventTypes = [
-  'Private Dining',
+  'private dinner',
   'Wedding Catering',
   'Corporate Event',
   'Birthday / Private Party',
@@ -45,7 +45,7 @@ const budgetRanges = [
 ]
 
 const steps = [
-  { icon: <Calendar size={20} />, title: 'Tell Us About Your Event', desc: 'Share the basics: date, location, guest count and type.' },
+  { icon: <Calendar size={20} />, title: 'tell us About Your Event', desc: 'Share the basics: date, location, guest count and type.' },
   { icon: <Users size={20} />,    title: 'Design Your Menu',           desc: 'Chef Harrizona creates a personalised proposal for you.' },
   { icon: <CheckCircle size={20} />, title: 'Confirm',               desc: 'Review and approve the proposal and deposit terms.' },
   { icon: <MapPin size={20} />,   title: 'Enjoy',                     desc: 'Chef arrives, cooks and serves an unforgettable experience.' },

@@ -91,8 +91,8 @@ export default function AboutPage() {
               <h3 className="text-xl font-semibold mb-4">Cuisine Specialties</h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5" role="list">
                 {specialties.map((s) => (
-                  <li key={s} className="flex items-center gap-2.5 text-sm text-[hsl(0_0%_65%)]">
-                    <CheckCircle size={16} className="shrink-0 text-[hsl(45_90%_52%)]" aria-hidden="true" />
+                  <li key={s} className="flex items-center gap-2.5 text-sm text-[hsl(0,3%,43%)]">
+                    <CheckCircle size={16} className="shrink-0 text-[hsl(45,68%,61%)]" aria-hidden="true" />
                     {s}
                   </li>
                 ))}
@@ -109,7 +109,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[hsl(0_0%_8%)]" aria-label="Chef's philosophy and values">
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[hsl(0,3%,8%)]" aria-label="Chef's philosophy and values">
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="Philosophy" title="How Chef Harrizona Cooks" subtitle="Four principles that guide every dish, every event and every interaction." />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -119,7 +119,7 @@ export default function AboutPage() {
                   <Icon size={24} aria-hidden="true" />
                 </div>
                 <h3 className="font-semibold text-base mb-2">{title}</h3>
-                <p className="text-sm text-[hsl(0_0%_55%)] leading-relaxed">{desc}</p>
+                <p className="text-sm text-[hsl(0,11%,84%)] leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -129,11 +129,11 @@ export default function AboutPage() {
       <section className="py-24 px-4 sm:px-6 lg:px-8" aria-label="Culinary journey timeline">
         <div className="mx-auto max-w-3xl">
           <SectionHeader eyebrow="Journey" title="The Culinary Story" />
-          <ol className="relative border-l border-[hsl(0_0%_22%)] ml-4 space-y-10" role="list">
+          <ol className="relative border-l border-[hsl(0,5%,4%)] ml-4 space-y-10" role="list">
             {timeline.map((item) => (
               <li key={item.year} className="relative pl-8">
-                <span className="absolute -left-[9px] top-1 size-4 rounded-full border-2 border-[hsl(45_90%_52%)] bg-[hsl(0_0%_10%)]" aria-hidden="true" />
-                <time dateTime={item.year} className="text-xs font-semibold uppercase tracking-wider text-[hsl(45_90%_52%)] mb-1 block">{item.year}</time>
+                <span className="absolute -left-[9px] top-1 size-4 rounded-full border-2 border-[hsl(45,91%,40%)] bg-[hsl(0,8%,7%)]" aria-hidden="true" />
+                <time dateTime={item.year} className="text-xs font-semibold uppercase tracking-wider text-[hsl(45,88%,26%)] mb-1 block">{item.year}</time>
                 <h3 className="font-semibold text-[hsl(42_30%_94%)] mb-1">{item.title}</h3>
                 <p className="text-sm text-[hsl(0_0%_55%)] leading-relaxed">{item.desc}</p>
               </li>

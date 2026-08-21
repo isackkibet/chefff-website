@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { Plus, Trash2, ImageOff } from 'lucide-react'
 import AdminNav from '@/components/admin/AdminNav'
@@ -9,39 +9,74 @@ import Modal from '@/components/ui/Modal'
 import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
 import ImageUploader from '@/components/ui/ImageUploader'
-import { adminStore } from '@/lib/admin/store'
-import { type GalleryImage, type GalleryCategory } from '@/lib/data'
+import { type GalleryCategory } from '@/lib/data'
 import { useToast } from '@/components/ui/ToastProvider'
 
 const CATEGORIES: Exclude<GalleryCategory, 'All'>[] = ['Food', 'Events', 'Private Dining', 'Weddings', 'Behind the Scenes', 'Chef']
 
+interface GalleryRow {
+  id: number
+  src: string
+  alt: string
+  caption: string | null
+  category: string
+}
+
 export default function AdminGalleryPage() {
   const { toast } = useToast()
-  const [images, setImages] = useState<GalleryImage[]>([])
+  const [images, setImages] = useState<GalleryRow[]>([])
   const [addOpen, setAddOpen] = useState(false)
-  const [deleteId, setDeleteId] = useState<string | null>(null)
+  const [deleteId, setDeleteId] = useState<number | null>(null)
   const [form, setForm] = useState({ src: '', alt: '', caption: '', category: 'Food' as Exclude<GalleryCategory, 'All'> })
 
-  useEffect(() => { setImages([...adminStore.gallery]) }, [])
+  const loadImages = useCallback(async () => {
+    try {
+      const res = await fetch('/api/admin/gallery')
+      if (!res.ok) throw new Error()
+      setImages(await res.json())
+    } catch {
+      toast('error', 'Could not load gallery images.')
+    }
+  }, [toast])
 
-  function handleAdd() {
+  useEffect(() => { loadImages() }, [loadImages])
+
+  async function handleAdd() {
     if (!form.src.trim() || !form.alt.trim()) {
       toast('error', 'Image URL and alt text are required.')
       return
     }
-    const img: GalleryImage = { id: `g${Date.now()}`, ...form }
-    adminStore.addGalleryImage(img)
-    setImages([...adminStore.gallery])
-    setForm({ src: '', alt: '', caption: '', category: 'Food' })
-    setAddOpen(false)
-    toast('success', 'Image added to gallery')
+    try {
+      const res = await fetch('/api/admin/gallery', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          src: form.src.trim(),
+          alt: form.alt.trim(),
+          caption: form.caption.trim() || undefined,
+          category: form.category,
+        }),
+      })
+      if (!res.ok) throw new Error()
+      setForm({ src: '', alt: '', caption: '', category: 'Food' })
+      setAddOpen(false)
+      toast('success', 'Image added to gallery')
+      await loadImages()
+    } catch {
+      toast('error', 'Could not save the image. Please try again.')
+    }
   }
 
-  function handleDelete(id: string) {
-    adminStore.deleteGalleryImage(id)
-    setImages([...adminStore.gallery])
-    setDeleteId(null)
-    toast('success', 'Image removed')
+  async function handleDelete(id: number) {
+    try {
+      const res = await fetch(`/api/admin/gallery?id=${id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error()
+      setDeleteId(null)
+      toast('success', 'Image removed')
+      await loadImages()
+    } catch {
+      toast('error', 'Could not remove the image.')
+    }
   }
 
   const inputClass = 'w-full rounded-xl bg-[hsl(0_0%_10%)] border border-[hsl(0_0%_22%)] px-3 py-2.5 text-sm text-[hsl(42_30%_94%)] placeholder:text-[hsl(0_0%_38%)] focus:outline-none focus:border-[hsl(45_90%_52%)] transition-colors'

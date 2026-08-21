@@ -1,19 +1,41 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
-import { galleryImages, type GalleryCategory } from '@/lib/data'
+import { type GalleryCategory, type GalleryImage } from '@/lib/data'
 
-const categories: GalleryCategory[] = ['All', 'Food', 'Events', 'Private Dining', 'Weddings', 'Behind the Scenes', 'Chef']
+interface GalleryVideo {
+  publicId: string
+  url: string
+  duration: number | null
+}
 
-export default function GalleryClient() {
-  const [activeCategory, setActiveCategory] = useState<GalleryCategory>('All')
+type Filter = GalleryCategory | 'Videos'
+
+const baseCategories: GalleryCategory[] = ['All', 'Food', 'Events', 'Private Dining', 'Weddings', 'Behind the Scenes', 'Chef']
+
+export default function GalleryClient({ images }: { images: GalleryImage[] }) {
+  const [videos, setVideos] = useState<GalleryVideo[]>([])
+  const [activeCategory, setActiveCategory] = useState<Filter>('All')
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null)
 
+  const categories: Filter[] = videos.length > 0 ? [...baseCategories, 'Videos'] : baseCategories
+
+  useEffect(() => {
+    let cancelled = false
+    fetch('/api/media')
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => { if (!cancelled && Array.isArray(data)) setVideos(data) })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [])
+
   const filtered = activeCategory === 'All'
-    ? galleryImages
-    : galleryImages.filter((img) => img.category === activeCategory)
+    ? images
+    : activeCategory === 'Videos'
+      ? []
+      : images.filter((img) => img.category === activeCategory)
 
   const openLightbox = (idx: number) => {
     setLightboxIdx(idx)
@@ -81,7 +103,26 @@ export default function GalleryClient() {
               </div>
             </button>
           ))}
+
+          {activeCategory === 'Videos' || (activeCategory === 'All' && videos.length > 0)
+            ? videos.map((video) => (
+                <div key={video.publicId} role="listitem" className="relative aspect-square w-full overflow-hidden rounded-xl bg-black">
+                  <video
+                    src={video.url}
+                    controls
+                    preload="metadata"
+                    playsInline
+                    className="absolute inset-0 size-full object-cover"
+                    aria-label="Chef Harrizona video"
+                  />
+                </div>
+              ))
+            : null}
         </div>
+
+        {filtered.length === 0 && activeCategory !== 'Videos' && (
+          <p className="py-16 text-center text-[hsl(0_0%_45%)]">No photos in this category yet.</p>
+        )}
       </div>
 
       {/* Lightbox */}

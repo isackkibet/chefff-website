@@ -1,12 +1,17 @@
 import type { Metadata } from 'next'
 import GalleryClient from './GalleryClient'
+import { getPublicGallery } from '@/lib/gallery'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Gallery | Food, Events & Private Dining Photography',
   description: 'Browse Chef Harrizona\'s gallery of food photography, private dining events, weddings, corporate catering and behind-the-scenes moments.',
 }
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const images = await getPublicGallery()
+
   return (
     <>
       <section className="pt-24 pb-10 sm:pt-32 sm:pb-12 px-4 sm:px-6 lg:px-8 text-center" aria-label="Gallery header">
@@ -21,7 +26,7 @@ export default function GalleryPage() {
           </p>
         </div>
       </section>
-      <GalleryClient />
+      <GalleryClient images={images} />
     </>
   )
 }

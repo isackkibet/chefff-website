@@ -3,22 +3,22 @@ import LegalPage from '@/components/layout/LegalPage'
 
 export const metadata: Metadata = {
   title: 'Cancellation Policy | Chef Harrizona',
-  description: 'Chef Harrizona\'s cancellation, rescheduling and refund policy.',
+  description: 'chef harrizona\'s cancellation, rescheduling and refund policy.',
 }
 
 export default function CancellationPolicyPage() {
   return (
-    <LegalPage title="Cancellation Policy" lastUpdated="August 2026">
+    <LegalPage title="Cancellation policy" lastUpdated="August 2026">
       <h2>Cancellation by Client</h2>
       <table className="w-full text-sm border-collapse mb-6">
         <thead>
           <tr className="border-b border-[hsl(0_0%_22%)]">
-            <th className="py-2 pr-4 text-left font-semibold text-[hsl(42_30%_94%)]">Notice Period</th>
+            <th className="py-2 pr-4 text-left font-semibold text-[hsl(46,19%,82%)]">Notice Period</th>
             <th className="py-2 text-left font-semibold text-[hsl(42_30%_94%)]">Refund</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-[hsl(0_0%_16%)] text-[hsl(0_0%_60%)]">
-          <tr><td className="py-3 pr-4">More than 14 days before event</td><td className="py-3">Full deposit refund</td></tr>
+        <tbody className="divide-y divide-[hsl(0_0%_16%)] text-[hsl(0,4%,35%)]">
+          <tr><td className="py-3 pr-4">more than 14 days before event</td><td className="py-3">Full deposit refund</td></tr>
           <tr><td className="py-3 pr-4">7–14 days before event</td><td className="py-3">50% deposit refund</td></tr>
           <tr><td className="py-3 pr-4">Less than 7 days before event</td><td className="py-3">No refund on deposit</td></tr>
           <tr><td className="py-3 pr-4">Same day or no-show</td><td className="py-3">Full event fee may apply</td></tr>
