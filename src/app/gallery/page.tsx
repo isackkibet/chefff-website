@@ -16,7 +16,7 @@ export default async function GalleryPage() {
     <>
       <section className="pt-24 pb-10 sm:pt-32 sm:pb-12 px-4 sm:px-6 lg:px-8 text-center" aria-label="Gallery header">
         <div className="mx-auto max-w-3xl">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[hsl(45_90%_52%)]">A Visual Story</p>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[hsl(45,92%,38%)]">A Visual Story</p>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             The <span className="text-gold-gradient">Gallery</span>
           </h1>

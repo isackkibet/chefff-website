@@ -1,7 +1,10 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-const DEFAULT_ORIGINS = ['https://chefharrizona.co.ke']
+const DEFAULT_ORIGINS = [
+  'https://chefharrizona.co.ke',
+  'https://chefff-harriszona.vercel.app',
+]
 
 if (process.env.NODE_ENV !== 'production') {
   DEFAULT_ORIGINS.push('http://localhost:3000', 'http://localhost:3001')

@@ -16,7 +16,7 @@ export default function FAQPage() {
             Frequently Asked <span className="text-gold-gradient">Questions</span>
           </h1>
           <div className="section-divider mx-auto mb-8" />
-          <p className="text-lg text-[hsl(0_0%_65%)] leading-relaxed">
+          <p className="text-lg text-[hsl(0,3%,38%)] leading-relaxed">
             Can't find what you're looking for?{' '}
             <a href="/contact" className="text-[hsl(45_90%_52%)] hover:underline">Contact us directly.</a>
           </p>

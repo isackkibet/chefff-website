@@ -10,7 +10,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   // because we're using localStorage for demo. In production, use
   // middleware.ts with HTTP-only session cookies for server-side protection.
   return (
-    <div className="min-h-screen bg-[hsl(0_0%_9%)] text-[hsl(42_30%_94%)]">
+    <div className="min-h-screen bg-[hsl(0_0%_9%)] text-[hsl(47,5%,64%)]">
       {children}
     </div>
   )
