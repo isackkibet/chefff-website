@@ -52,7 +52,9 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         model: AI_MODEL,
         temperature: 0.6,
-        max_tokens: 400,
+        // Generous cap: reasoning models spend tokens on hidden reasoning
+        // before writing the visible reply.
+        max_tokens: 800,
         messages: [
           { role: 'system', content: systemPrompt },
           {
