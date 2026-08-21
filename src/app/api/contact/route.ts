@@ -1,7 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse, after } from 'next/server'
 import { z } from 'zod'
+import { eq } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
 import { contactMessages } from '@/lib/db/schema'
+import { draftReply, sendReplyEmail } from '@/lib/ai'
 import {
   forbiddenResponse,
   getClientIp,
@@ -49,6 +51,34 @@ export async function POST(req: NextRequest) {
     }).returning()
 
     logSecurityEvent('submission', { ip, route: '/api/contact', id: msg.id })
+
+    // Auto-reply assistant: draft a response immediately (and auto-email it
+    // when RESEND_API_KEY is configured), without blocking the form response.
+    after(async () => {
+      try {
+        const reply = await draftReply({
+          context: 'contact',
+          name: data.name,
+          subject: data.subject,
+          message: data.message,
+        })
+        if (!reply) return
+
+        const emailed = await sendReplyEmail({
+          to: data.email,
+          subject: `Re: ${data.subject}`,
+          reply,
+        })
+
+        await db
+          .update(contactMessages)
+          .set(emailed ? { aiReply: reply, replyEmailedAt: new Date() } : { aiReply: reply })
+          .where(eq(contactMessages.id, msg.id))
+      } catch (err) {
+        console.error('[ai-autoreply contact]', err)
+      }
+    })
+
     return NextResponse.json({ success: true, id: msg.id }, { status: 201 })
   } catch (err) {
     if (err instanceof z.ZodError) {

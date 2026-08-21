@@ -18,6 +18,8 @@ interface ContactMessage {
   message: string
   read: boolean
   createdAt: string
+  aiReply?: string | null
+  replyEmailedAt?: string | null
 }
 
 export default function AdminContactPage() {
@@ -72,7 +74,7 @@ export default function AdminContactPage() {
 
   function openDetail(m: ContactMessage) {
     setSelected(m)
-    setAiReply('')
+    setAiReply(m.aiReply ?? '')
     setCopied(false)
     if (!m.read) markRead(m.id, true)
   }
@@ -226,6 +228,11 @@ export default function AdminContactPage() {
               <div className="flex items-center justify-between mb-3">
                 <p className="text-sm font-semibold text-[hsl(45_90%_52%)] flex items-center gap-1.5">
                   <Sparkles size={15} aria-hidden="true" /> AI Reply Assistant
+                  {selected.replyEmailedAt && (
+                    <span className="rounded-full bg-[hsl(142_71%_45%/0.15)] px-2 py-0.5 text-xs font-medium normal-case text-[hsl(142_71%_55%)]">
+                      Emailed to client
+                    </span>
+                  )}
                 </p>
                 <Button variant="outline" size="sm" onClick={draftAiReply} loading={aiLoading} disabled={!!aiReply}>
                   {aiReply ? 'Regenerate' : 'Draft AI Reply'}

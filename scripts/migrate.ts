@@ -62,6 +62,19 @@ async function migrate() {
     );
   `
 
+  // AI auto-reply columns (safe to re-run on existing tables)
+  await sql`
+    ALTER TABLE bookings
+      ADD COLUMN IF NOT EXISTS ai_reply TEXT,
+      ADD COLUMN IF NOT EXISTS reply_emailed_at TIMESTAMPTZ;
+  `
+
+  await sql`
+    ALTER TABLE contact_messages
+      ADD COLUMN IF NOT EXISTS ai_reply TEXT,
+      ADD COLUMN IF NOT EXISTS reply_emailed_at TIMESTAMPTZ;
+  `
+
   await sql`
     CREATE TABLE IF NOT EXISTS menu_items (
       id          SERIAL PRIMARY KEY,

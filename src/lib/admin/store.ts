@@ -28,6 +28,8 @@ export interface Booking {
   createdAt: string
   notes?: string
   quotedAmount?: number
+  aiReply?: string
+  replyEmailedAt?: string
 }
 
 // ─── Seed bookings ─────────────────────────────────────────────────────────────

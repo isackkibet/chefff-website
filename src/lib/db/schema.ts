@@ -26,6 +26,8 @@ export const bookings = pgTable('bookings', {
   status:          bookingStatusEnum('status').notNull().default('PENDING'),
   notes:           text('notes'),
   quotedAmount:    integer('quoted_amount'),
+  aiReply:         text('ai_reply'),
+  replyEmailedAt:  timestamp('reply_emailed_at'),
   createdAt:       timestamp('created_at').notNull().defaultNow(),
   updatedAt:       timestamp('updated_at').notNull().defaultNow(),
 })
@@ -39,6 +41,8 @@ export const contactMessages = pgTable('contact_messages', {
   subject:   varchar('subject', { length: 200 }).notNull(),
   message:   text('message').notNull(),
   read:      boolean('read').notNull().default(false),
+  aiReply:   text('ai_reply'),
+  replyEmailedAt: timestamp('reply_emailed_at'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 })
 

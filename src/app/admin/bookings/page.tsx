@@ -1,12 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Search, Eye, MessageSquare, CheckCircle, XCircle, ChevronDown } from 'lucide-react'
+import { Search, Eye, MessageSquare, CheckCircle, XCircle, ChevronDown, Sparkles, Copy, Check, Send } from 'lucide-react'
 import AdminNav from '@/components/admin/AdminNav'
 import AdminGuard from '@/components/admin/AdminGuard'
 import BookingStatusBadge from '@/components/admin/BookingStatusBadge'
 import Modal from '@/components/ui/Modal'
 import Button from '@/components/ui/Button'
+import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import { type Booking, type BookingStatus } from '@/lib/admin/store'
 import { useToast } from '@/components/ui/ToastProvider'
 
@@ -32,6 +33,8 @@ function mapBooking(row: Record<string, unknown>): Booking {
     createdAt: String(row.createdAt),
     notes: row.notes ? String(row.notes) : undefined,
     quotedAmount: row.quotedAmount ? Number(row.quotedAmount) : undefined,
+    aiReply: row.aiReply ? String(row.aiReply) : undefined,
+    replyEmailedAt: row.replyEmailedAt ? String(row.replyEmailedAt) : undefined,
   }
 }
 
@@ -43,6 +46,9 @@ export default function AdminBookingsPage() {
   const [selected, setSelected] = useState<Booking | null>(null)
   const [noteText, setNoteText] = useState('')
   const [quoteAmount, setQuoteAmount] = useState('')
+  const [aiReply, setAiReply] = useState('')
+  const [aiLoading, setAiLoading] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   useEffect(() => { loadBookings() }, [])
 
@@ -114,6 +120,58 @@ export default function AdminBookingsPage() {
     setSelected(b)
     setNoteText(b.notes ?? '')
     setQuoteAmount(b.quotedAmount?.toString() ?? '')
+    setAiReply(b.aiReply ?? '')
+    setCopied(false)
+  }
+
+  // Compact summary of the booking sent to the AI so it knows the details.
+  function bookingBrief(b: Booking): string {
+    const lines = [
+      `Event type: ${b.eventType}`,
+      `Date: ${new Date(b.eventDate).toLocaleDateString('en-KE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })} at ${b.preferredTime}`,
+      `Guests: ${b.guestCount}`,
+      `Location: ${b.location}`,
+    ]
+    if (b.budgetRange) lines.push(`Budget: ${b.budgetRange}`)
+    if (b.cuisinePrefs) lines.push(`Cuisine preferences: ${b.cuisinePrefs}`)
+    if (b.dietaryReqs) lines.push(`Dietary requirements: ${b.dietaryReqs}`)
+    if (b.specialRequests) lines.push(`Special requests: ${b.specialRequests}`)
+    return lines.join('\n')
+  }
+
+  async function draftAiReply() {
+    if (!selected) return
+    setAiLoading(true)
+    try {
+      const res = await fetch('/api/admin/ai-reply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: selected.fullName,
+          subject: selected.eventType,
+          message: bookingBrief(selected),
+          context: 'booking',
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok || !data.reply) throw new Error(data.error ?? 'Failed to draft reply')
+      setAiReply(data.reply)
+    } catch {
+      toast('error', 'Could not draft an AI reply')
+    } finally {
+      setAiLoading(false)
+    }
+  }
+
+  async function copyReply() {
+    if (!aiReply) return
+    try {
+      await navigator.clipboard.writeText(aiReply)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      toast('error', 'Could not copy reply')
+    }
   }
 
   const counts = ALL_STATUSES.reduce((acc, s) => {
@@ -297,6 +355,53 @@ export default function AdminBookingsPage() {
                 <p className="text-sm text-[hsl(42_30%_85%)]">{selected.specialRequests}</p>
               </div>
             )}
+
+            {/* AI reply assistant */}
+            <div className="mb-5 rounded-xl bg-[hsl(0_0%_10%)] border border-[hsl(45_90%_52%/0.25)] p-4">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-sm font-semibold text-[hsl(45_90%_52%)] flex items-center gap-1.5">
+                  <Sparkles size={15} aria-hidden="true" /> AI Reply Assistant
+                  {selected.replyEmailedAt && (
+                    <span className="rounded-full bg-[hsl(142_71%_45%/0.15)] px-2 py-0.5 text-xs font-medium normal-case text-[hsl(142_71%_55%)]">
+                      Emailed to client
+                    </span>
+                  )}
+                </p>
+                <Button variant="outline" size="sm" onClick={draftAiReply} loading={aiLoading} disabled={!!aiReply}>
+                  {aiReply ? 'Regenerate' : 'Draft AI Reply'}
+                </Button>
+              </div>
+
+              {aiLoading && <LoadingSpinner size="sm" />}
+
+              {aiReply && (
+                <>
+                  <textarea
+                    value={aiReply}
+                    onChange={(e) => setAiReply(e.target.value)}
+                    rows={6}
+                    aria-label="AI drafted reply"
+                    className="w-full rounded-xl bg-[hsl(0_0%_12%)] border border-[hsl(0_0%_22%)] px-3 py-2.5 text-sm text-[hsl(42_30%_94%)] focus:outline-none focus:border-[hsl(45_90%_52%)] transition-colors resize-none mb-3"
+                  />
+                  <div className="flex flex-wrap gap-2">
+                    <Button variant="primary" size="sm" onClick={copyReply}>
+                      {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
+                      {copied ? 'Copied' : 'Copy Reply'}
+                    </Button>
+                    {selected.phone && (
+                      <a
+                        href={`https://wa.me/${selected.phone.replace(/\D/g, '')}?text=${encodeURIComponent(aiReply)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#25D366] px-4 py-2 text-sm font-semibold text-[hsl(0_0%_10%)] hover:bg-[#2ee478] transition-colors"
+                      >
+                        <Send size={14} aria-hidden="true" /> Send via WhatsApp
+                      </a>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
 
             {/* Quote section */}
             {(selected.status === 'REVIEWING' || selected.status === 'QUOTED' || selected.status === 'CONFIRMED') && (

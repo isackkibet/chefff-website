@@ -1,7 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse, after } from 'next/server'
 import { z } from 'zod'
+import { eq } from 'drizzle-orm'
 import { db } from '@/lib/db/client'
 import { bookings } from '@/lib/db/schema'
+import { draftReply, sendReplyEmail } from '@/lib/ai'
 import {
   forbiddenResponse,
   getClientIp,
@@ -71,6 +73,45 @@ export async function POST(req: NextRequest) {
     }).returning()
 
     logSecurityEvent('submission', { ip, route: '/api/bookings', refNumber, id: booking.id })
+
+    // Auto-reply assistant: draft a response immediately (and auto-email it
+    // when RESEND_API_KEY is configured), without blocking the form response.
+    after(async () => {
+      try {
+        const brief = [
+          `Event type: ${data.eventType}`,
+          `Date: ${data.eventDate} at ${data.preferredTime}`,
+          `Guests: ${data.guestCount}`,
+          `Location: ${data.location}`,
+          data.budgetRange && `Budget: ${data.budgetRange}`,
+          data.cuisinePrefs && `Cuisine preferences: ${data.cuisinePrefs}`,
+          data.dietaryReqs && `Dietary requirements: ${data.dietaryReqs}`,
+          data.specialRequests && `Special requests: ${data.specialRequests}`,
+        ].filter(Boolean).join('\n')
+
+        const reply = await draftReply({
+          context: 'booking',
+          name: data.fullName,
+          subject: data.eventType,
+          message: brief,
+        })
+        if (!reply) return
+
+        const emailed = await sendReplyEmail({
+          to: data.email,
+          subject: `${data.eventType} booking ${refNumber} - Chef Harrizona`,
+          reply,
+        })
+
+        await db
+          .update(bookings)
+          .set(emailed ? { aiReply: reply, replyEmailedAt: new Date() } : { aiReply: reply })
+          .where(eq(bookings.id, booking.id))
+      } catch (err) {
+        console.error('[ai-autoreply booking]', err)
+      }
+    })
+
     return NextResponse.json({ success: true, refNumber, id: booking.id }, { status: 201 })
   } catch (err) {
     if (err instanceof z.ZodError) {

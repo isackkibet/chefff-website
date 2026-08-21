@@ -41,6 +41,8 @@ await sql`
     status booking_status NOT NULL DEFAULT 'PENDING',
     notes text,
     quoted_amount integer,
+    ai_reply text,
+    reply_emailed_at timestamp,
     created_at timestamp NOT NULL DEFAULT now(),
     updated_at timestamp NOT NULL DEFAULT now()
   )
@@ -56,6 +58,8 @@ await sql`
     subject varchar(200) NOT NULL,
     message text NOT NULL,
     read boolean NOT NULL DEFAULT false,
+    ai_reply text,
+    reply_emailed_at timestamp,
     created_at timestamp NOT NULL DEFAULT now()
   )
 `
