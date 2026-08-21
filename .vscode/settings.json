@@ -1,11 +1,15 @@
 {
   "files.exclude": {
-    "node_modules": true
+    "node_modules": true,
+    ".next": true,
+    "tsconfig.tsbuildinfo": true
   },
   "search.exclude": {
-    "node_modules": true
+    "node_modules": true,
+    ".next": true
   },
   "files.watcherExclude": {
-    "**/node_modules": true
+    "**/node_modules": true,
+    "**/.next/**": true
   }
 }
