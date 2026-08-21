@@ -29,24 +29,16 @@ function peopleRank(alt: string) {
 
 export default function HeroBackground() {
   const [active, setActive] = useState(0)
-  const [paused, setPaused] = useState(false)
 
   useEffect(() => {
-    if (paused) return
-    const t = setInterval(() => setActive((a) => (a + 1) % heroSlides.length), 2000)
+    const t = setInterval(() => setActive((a) => (a + 1) % heroSlides.length), 6000)
     return () => clearInterval(t)
-  }, [paused])
-
-  function advance() {
-    setActive((a) => (a + 1) % heroSlides.length)
-  }
+  }, [])
 
   return (
     <div
-      className="absolute inset-0 overflow-hidden"
+      className="absolute inset-0 overflow-hidden pointer-events-none"
       aria-hidden="true"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
     >
       {/* Slides */}
       {heroSlides.map((img, i) => (
@@ -65,18 +57,11 @@ export default function HeroBackground() {
         </div>
       ))}
 
-      {/* Click anywhere on the background to advance the slide */}
-      <button
-        onClick={advance}
-        className="absolute inset-0 cursor-pointer"
-        aria-label="Next background photo"
-      />
-
       {/* Dark overlay for text readability */}
       <div className="hero-overlay absolute inset-0 pointer-events-none" aria-hidden="true" />
 
       {/* Interactive image dots */}
-      <div className="absolute bottom-24 inset-x-0 flex justify-center gap-2 z-10">
+      <div className="absolute bottom-24 inset-x-0 flex justify-center gap-2 z-10 pointer-events-auto">
         {heroSlides.map((img, i) => (
           <button
             key={img.id}
