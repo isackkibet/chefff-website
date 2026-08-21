@@ -1,18 +1,18 @@
-import "server-only";
-import { setDefaultAutoSelectFamily } from "net";
-import { neon } from "@neondatabase/serverless";
+import 'server-only'
+import { setDefaultAutoSelectFamily } from 'net'
+import { neon } from '@neondatabase/serverless'
 
-setDefaultAutoSelectFamily(false);
+setDefaultAutoSelectFamily(false)
 
-const connectionString = process.env.DATABASE_URL;
+const connectionString = process.env.DATABASE_URL
 
 if (!connectionString) {
-  throw new Error("DATABASE_URL is not configured.");
+  throw new Error('DATABASE_URL is not configured.')
 }
 
-export const sql = neon(connectionString);
+export const sql = neon(connectionString)
 
-let schemaPromise: Promise<void> | undefined;
+let schemaPromise: Promise<void> | undefined
 
 /** Creates the database table on first use, so a fresh Neon project works immediately. */
 export function ensureDatabaseSchema() {
@@ -35,12 +35,12 @@ export function ensureDatabaseSchema() {
       status TEXT NOT NULL DEFAULT 'PENDING',
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
-  `.then(() => undefined);
+  `.then(() => undefined)
 
-  return schemaPromise;
+  return schemaPromise
 }
 
-let reviewsSchemaPromise: Promise<void> | undefined;
+let reviewsSchemaPromise: Promise<void> | undefined
 
 /** Stores customer-submitted reviews separately until they are approved. */
 export function ensureReviewsSchema() {
@@ -54,7 +54,7 @@ export function ensureReviewsSchema() {
       approved BOOLEAN NOT NULL DEFAULT FALSE,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
-  `.then(() => undefined);
+  `.then(() => undefined)
 
-  return reviewsSchemaPromise;
+  return reviewsSchemaPromise
 }

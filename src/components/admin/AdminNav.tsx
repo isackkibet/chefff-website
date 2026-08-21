@@ -1,46 +1,36 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useState } from 'react'
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 import {
-  LayoutDashboard,
-  Calendar,
-  UtensilsCrossed,
-  Image,
-  Star,
-  FileText,
-  Settings,
-  LogOut,
-  Menu,
-  X,
-  Mail,
-  Video,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import Logo from "@/components/ui/Logo";
-import AdminAlerts from "@/components/admin/AdminAlerts";
+  LayoutDashboard, Calendar, UtensilsCrossed, Image, Star,
+  FileText, Settings, LogOut, Menu, X, Mail, Video,
+} from 'lucide-react'
+import { cn } from '@/lib/utils'
+import Logo from '@/components/ui/Logo'
+import AdminAlerts from '@/components/admin/AdminAlerts'
 
 const navItems = [
-  { label: "Dashboard", href: "/admin/dashboard", Icon: LayoutDashboard },
-  { label: "Bookings", href: "/admin/bookings", Icon: Calendar },
-  { label: "Messages", href: "/admin/contact", Icon: Mail },
-  { label: "Menu", href: "/admin/menu", Icon: UtensilsCrossed },
-  { label: "Gallery", href: "/admin/gallery", Icon: Image },
-  { label: "Media", href: "/admin/media", Icon: Video },
-  { label: "Testimonials", href: "/admin/testimonials", Icon: Star },
-  { label: "Blog", href: "/admin/blog", Icon: FileText },
-  { label: "Settings", href: "/admin/settings", Icon: Settings },
-];
+  { label: 'Dashboard',    href: '/admin/dashboard',     Icon: LayoutDashboard },
+  { label: 'Bookings',     href: '/admin/bookings',      Icon: Calendar },
+  { label: 'Messages',     href: '/admin/contact',       Icon: Mail },
+  { label: 'Menu',         href: '/admin/menu',          Icon: UtensilsCrossed },
+  { label: 'Gallery',      href: '/admin/gallery',       Icon: Image },
+  { label: 'Media',        href: '/admin/media',         Icon: Video },
+  { label: 'Testimonials', href: '/admin/testimonials',  Icon: Star },
+  { label: 'Blog',         href: '/admin/blog',          Icon: FileText },
+  { label: 'Settings',     href: '/admin/settings',      Icon: Settings },
+]
 
 export default function AdminNav() {
-  const pathname = usePathname();
-  const router = useRouter();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname()
+  const router = useRouter()
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   async function handleLogout() {
-    await fetch("/api/admin/auth", { method: "DELETE" });
-    router.push("/admin/login");
+    await fetch('/api/admin/auth', { method: 'DELETE' })
+    router.push('/admin/login')
   }
 
   const NavContent = () => (
@@ -50,45 +40,36 @@ export default function AdminNav() {
         <div className="flex items-center gap-2.5">
           <Logo size={32} />
           <div>
-            <p className="font-display font-bold text-sm leading-none">
-              Chef Harrizona
-            </p>
-            <p className="text-[10px] text-[hsl(45_90%_52%)] uppercase tracking-widest">
-              Admin
-            </p>
+            <p className="font-display font-bold text-sm leading-none">Chef Harrizona</p>
+            <p className="text-[10px] text-[hsl(45_90%_52%)] uppercase tracking-widest">Admin</p>
           </div>
         </div>
         <AdminAlerts />
       </div>
 
       {/* Links */}
-      <nav
-        className="flex-1 overflow-y-auto px-3 py-4"
-        aria-label="Admin navigation"
-      >
+      <nav className="flex-1 overflow-y-auto px-3 py-4" aria-label="Admin navigation">
         <ul className="space-y-1" role="list">
           {navItems.map(({ label, href, Icon }) => {
-            const active =
-              pathname === href ||
-              (href !== "/admin" && pathname.startsWith(href));
+            const active = pathname === href || (href !== '/admin' && pathname.startsWith(href))
             return (
               <li key={href}>
                 <Link
                   href={href}
                   onClick={() => setMobileOpen(false)}
                   className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors",
+                    'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
                     active
-                      ? "bg-[hsl(45_90%_52%/0.12)] text-[hsl(45_90%_52%)]"
-                      : "text-[hsl(0_0%_60%)] hover:bg-[hsl(0_0%_100%/0.05)] hover:text-[hsl(42_30%_94%)]",
+                      ? 'bg-[hsl(45_90%_52%/0.12)] text-[hsl(45_90%_52%)]'
+                      : 'text-[hsl(0_0%_60%)] hover:bg-[hsl(0_0%_100%/0.05)] hover:text-[hsl(42_30%_94%)]',
                   )}
-                  aria-current={active ? "page" : undefined}
+                  aria-current={active ? 'page' : undefined}
                 >
                   <Icon size={17} aria-hidden="true" />
                   {label}
                 </Link>
               </li>
-            );
+            )
           })}
         </ul>
       </nav>
@@ -104,7 +85,7 @@ export default function AdminNav() {
         </button>
       </div>
     </>
-  );
+  )
 
   return (
     <>
@@ -124,7 +105,7 @@ export default function AdminNav() {
           <button
             onClick={() => setMobileOpen((v) => !v)}
             className="size-9 flex items-center justify-center rounded-lg text-[hsl(42_30%_94%)] hover:bg-[hsl(0_0%_100%/0.08)] transition-colors"
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -135,16 +116,12 @@ export default function AdminNav() {
       {/* Mobile drawer */}
       {mobileOpen && (
         <div className="lg:hidden fixed inset-0 z-20" aria-modal="true">
-          <div
-            className="absolute inset-0 bg-black/60"
-            onClick={() => setMobileOpen(false)}
-            aria-hidden="true"
-          />
+          <div className="absolute inset-0 bg-black/60" onClick={() => setMobileOpen(false)} aria-hidden="true" />
           <aside className="absolute top-0 left-0 w-64 h-full bg-[hsl(0_0%_8%)] border-r border-[hsl(0_0%_16%)] flex flex-col">
             <NavContent />
           </aside>
         </div>
       )}
     </>
-  );
+  )
 }

@@ -1,41 +1,16 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import {
-  ShoppingCart,
-  Star,
-  Clock,
-  Users,
-  ChefHat,
-  X,
-  Check,
-  Truck,
-  Zap,
-} from "lucide-react";
-import { ButtonLink } from "@/components/ui/Button";
-import Button from "@/components/ui/Button";
-import Modal from "@/components/ui/Modal";
-import { useToast } from "@/components/ui/ToastProvider";
-import { useCart } from "@/lib/cart";
-import { mealKits, type MealKit } from "@/lib/data";
+import { useState } from 'react'
+import { ShoppingCart, Star, Clock, Users, ChefHat, X, Check, Truck, Zap } from 'lucide-react'
+import { ButtonLink } from '@/components/ui/Button'
+import Button from '@/components/ui/Button'
+import Modal from '@/components/ui/Modal'
+import { useToast } from '@/components/ui/ToastProvider'
+import { useCart } from '@/lib/cart'
+import { mealKits, type MealKit } from '@/lib/data'
 
-type Filter =
-  | "All"
-  | "Easy"
-  | "Beginner"
-  | "Intermediate"
-  | "Vegetarian"
-  | "Vegan"
-  | "Gluten Free";
-const filters: Filter[] = [
-  "All",
-  "Easy",
-  "Beginner",
-  "Intermediate",
-  "Vegetarian",
-  "Vegan",
-  "Gluten Free",
-];
+type Filter = 'All' | 'Easy' | 'Beginner' | 'Intermediate' | 'Vegetarian' | 'Vegan' | 'Gluten Free'
+const filters: Filter[] = ['All', 'Easy', 'Beginner', 'Intermediate', 'Vegetarian', 'Vegan', 'Gluten Free']
 
 function StarRating({ rating, count }: { rating: number; count: number }) {
   return (
@@ -44,70 +19,56 @@ function StarRating({ rating, count }: { rating: number; count: number }) {
         {Array.from({ length: 5 }).map((_, i) => (
           <svg
             key={i}
-            className={`size-3.5 ${i < Math.round(rating) ? "fill-[hsl(45_90%_52%)] text-[hsl(45_90%_52%)]" : "fill-none text-[hsl(0_0%_30%)]"}`}
-            viewBox="0 0 20 20"
-            aria-hidden="true"
+            className={`size-3.5 ${i < Math.round(rating) ? 'fill-[hsl(45_90%_52%)] text-[hsl(45_90%_52%)]' : 'fill-none text-[hsl(0_0%_30%)]'}`}
+            viewBox="0 0 20 20" aria-hidden="true"
           >
             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
           </svg>
         ))}
       </div>
-      <span className="text-xs font-semibold text-[hsl(45_90%_52%)]">
-        {rating}
-      </span>
+      <span className="text-xs font-semibold text-[hsl(45_90%_52%)]">{rating}</span>
       <span className="text-xs text-[hsl(0_0%_45%)]">({count})</span>
     </div>
-  );
+  )
 }
 
-function DifficultyDot({ difficulty }: { difficulty: MealKit["difficulty"] }) {
-  const color = {
-    Easy: "bg-[hsl(142_71%_45%)]",
-    Beginner: "bg-[hsl(142_71%_45%)]",
-    Intermediate: "bg-[hsl(38_92%_50%)]",
-  }[difficulty];
+function DifficultyDot({ difficulty }: { difficulty: MealKit['difficulty'] }) {
+  const color = { Easy: 'bg-[hsl(142_71%_45%)]', Beginner: 'bg-[hsl(142_71%_45%)]', Intermediate: 'bg-[hsl(38_92%_50%)]' }[difficulty]
   return (
     <span className="inline-flex items-center gap-1.5 text-xs text-[hsl(0_0%_55%)]">
       <span className={`size-1.5 rounded-full ${color}`} aria-hidden="true" />
       {difficulty}
     </span>
-  );
+  )
 }
 
 export default function MealKitsClient() {
-  const { toast } = useToast();
-  const { addItem, getQty, openCart } = useCart();
-  const [filter, setFilter] = useState<Filter>("All");
-  const [selected, setSelected] = useState<MealKit | null>(null);
+  const { toast } = useToast()
+  const { addItem, getQty, openCart } = useCart()
+  const [filter, setFilter] = useState<Filter>('All')
+  const [selected, setSelected] = useState<MealKit | null>(null)
 
   const filtered = mealKits.filter((kit) => {
-    if (filter === "All") return true;
-    if (["Easy", "Beginner", "Intermediate"].includes(filter))
-      return kit.difficulty === filter;
-    return kit.dietary?.includes(filter) ?? false;
-  });
+    if (filter === 'All') return true
+    if (['Easy', 'Beginner', 'Intermediate'].includes(filter)) return kit.difficulty === filter
+    return kit.dietary?.includes(filter) ?? false
+  })
 
   function addToCart(kit: MealKit) {
-    addItem(kit);
-    toast("success", `${kit.name} added to cart!`);
-    openCart();
+    addItem(kit)
+    toast('success', `${kit.name} added to cart!`)
+    openCart()
   }
 
   const discount = (kit: MealKit) =>
-    Math.round(((kit.originalPrice - kit.price) / kit.originalPrice) * 100);
+    Math.round(((kit.originalPrice - kit.price) / kit.originalPrice) * 100)
 
   return (
-    <section
-      className="pb-24 px-4 sm:px-6 lg:px-8"
-      aria-label="Meal kits catalogue"
-    >
+    <section className="pb-24 px-4 sm:px-6 lg:px-8" aria-label="Meal kits catalogue">
       <div className="mx-auto max-w-7xl">
+
         {/* Filter bar */}
-        <div
-          className="flex flex-wrap gap-2 justify-center mb-10"
-          role="group"
-          aria-label="Filter meal kits"
-        >
+        <div className="flex flex-wrap gap-2 justify-center mb-10" role="group" aria-label="Filter meal kits">
           {filters.map((f) => (
             <button
               key={f}
@@ -115,8 +76,8 @@ export default function MealKitsClient() {
               aria-pressed={filter === f}
               className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
                 filter === f
-                  ? "bg-[hsl(45_90%_52%)] text-[hsl(0_0%_10%)]"
-                  : "bg-[hsl(0_0%_14%)] text-[hsl(0_0%_65%)] hover:bg-[hsl(0_0%_18%)] hover:text-[hsl(42_30%_94%)]"
+                  ? 'bg-[hsl(45_90%_52%)] text-[hsl(0_0%_10%)]'
+                  : 'bg-[hsl(0_0%_14%)] text-[hsl(0_0%_65%)] hover:bg-[hsl(0_0%_18%)] hover:text-[hsl(42_30%_94%)]'
               }`}
             >
               {f}
@@ -124,18 +85,12 @@ export default function MealKitsClient() {
           ))}
         </div>
 
-        <p
-          className="text-sm text-[hsl(0_0%_45%)] text-center mb-8"
-          aria-live="polite"
-        >
-          Showing {filtered.length} kit{filtered.length !== 1 ? "s" : ""}
+        <p className="text-sm text-[hsl(0_0%_45%)] text-center mb-8" aria-live="polite">
+          Showing {filtered.length} kit{filtered.length !== 1 ? 's' : ''}
         </p>
 
         {/* Kits grid */}
-        <div
-          className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-          role="list"
-        >
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" role="list">
           {filtered.map((kit) => (
             <article
               key={kit.id}
@@ -164,11 +119,7 @@ export default function MealKitsClient() {
                 {/* Cart indicator */}
                 {getQty(kit.id) > 0 && (
                   <div className="absolute top-3 right-3 flex size-7 items-center justify-center rounded-full bg-[hsl(142_71%_45%)]">
-                    <Check
-                      size={14}
-                      className="text-white"
-                      aria-label="Added to cart"
-                    />
+                    <Check size={14} className="text-white" aria-label="Added to cart" />
                   </div>
                 )}
               </div>
@@ -198,15 +149,8 @@ export default function MealKitsClient() {
                 {/* Features */}
                 <div className="space-y-1 mb-4">
                   {kit.features.slice(0, 2).map((f) => (
-                    <div
-                      key={f}
-                      className="flex items-center gap-1.5 text-xs text-[hsl(0_0%_55%)]"
-                    >
-                      <Check
-                        size={11}
-                        className="shrink-0 text-[hsl(45_90%_52%)]"
-                        aria-hidden="true"
-                      />
+                    <div key={f} className="flex items-center gap-1.5 text-xs text-[hsl(0_0%_55%)]">
+                      <Check size={11} className="shrink-0 text-[hsl(45_90%_52%)]" aria-hidden="true" />
                       {f}
                     </div>
                   ))}
@@ -232,9 +176,7 @@ export default function MealKitsClient() {
                       aria-label={`Add ${kit.name} to cart`}
                     >
                       <ShoppingCart size={14} aria-hidden="true" />
-                      {getQty(kit.id) > 0
-                        ? `In Cart (${getQty(kit.id)})`
-                        : "Add to Cart"}
+                      {getQty(kit.id) > 0 ? `In Cart (${getQty(kit.id)})` : 'Add to Cart'}
                     </Button>
                     <button
                       onClick={() => setSelected(kit)}
@@ -254,29 +196,15 @@ export default function MealKitsClient() {
         <div className="mt-16 rounded-2xl bg-gradient-to-r from-[hsl(38_85%_38%/0.15)] to-[hsl(45_90%_52%/0.08)] border border-[hsl(45_90%_52%/0.25)] p-6 sm:p-8">
           <div className="grid sm:grid-cols-3 gap-6 text-center">
             {[
-              {
-                Icon: Truck,
-                title: "Free Delivery",
-                desc: "On all orders within Nairobi",
-              },
-              {
-                Icon: Zap,
-                title: "Same-Day Delivery",
-                desc: "Order before 11 AM",
-              },
-              {
-                Icon: ChefHat,
-                title: "Chef-Curated Recipes",
-                desc: "Step-by-step video guides included",
-              },
+              { Icon: Truck,   title: 'Free Delivery',       desc: 'On all orders within Nairobi' },
+              { Icon: Zap,     title: 'Same-Day Delivery',    desc: 'Order before 11 AM' },
+              { Icon: ChefHat, title: 'Chef-Curated Recipes', desc: 'Step-by-step video guides included' },
             ].map(({ Icon, title, desc }) => (
               <div key={title} className="flex flex-col items-center gap-2">
                 <div className="flex size-12 items-center justify-center rounded-full bg-[hsl(45_90%_52%/0.15)] text-[hsl(45_90%_52%)]">
                   <Icon size={22} aria-hidden="true" />
                 </div>
-                <p className="font-semibold text-sm text-[hsl(42_30%_94%)]">
-                  {title}
-                </p>
+                <p className="font-semibold text-sm text-[hsl(42_30%_94%)]">{title}</p>
                 <p className="text-xs text-[hsl(0_0%_55%)]">{desc}</p>
               </div>
             ))}
@@ -285,12 +213,8 @@ export default function MealKitsClient() {
 
         {/* Custom order CTA */}
         <div className="mt-12 text-center">
-          <p className="text-[hsl(0_0%_55%)] mb-4">
-            Want a custom meal kit or a large order?
-          </p>
-          <ButtonLink href="/contact" variant="outline">
-            Get in Touch
-          </ButtonLink>
+          <p className="text-[hsl(0_0%_55%)] mb-4">Want a custom meal kit or a large order?</p>
+          <ButtonLink href="/contact" variant="outline">Get in Touch</ButtonLink>
         </div>
       </div>
 
@@ -310,16 +234,10 @@ export default function MealKitsClient() {
                 alt={selected.name}
                 className="w-full h-full object-cover"
               />
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
-                aria-hidden="true"
-              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" aria-hidden="true" />
               <div className="absolute bottom-3 left-4 right-4">
                 <div className="flex items-center justify-between">
-                  <StarRating
-                    rating={selected.rating}
-                    count={selected.reviews}
-                  />
+                  <StarRating rating={selected.rating} count={selected.reviews} />
                   {selected.badge && (
                     <span className="rounded-full bg-[hsl(45_90%_52%)] px-2.5 py-0.5 text-xs font-bold text-[hsl(0_0%_10%)]">
                       {selected.badge}
@@ -331,33 +249,21 @@ export default function MealKitsClient() {
 
             {/* Header */}
             <div className="flex items-start justify-between gap-3 mb-3 pr-8">
-              <h2 className="font-display text-xl font-bold">
-                {selected.name}
-              </h2>
+              <h2 className="font-display text-xl font-bold">{selected.name}</h2>
               <div className="text-right shrink-0">
-                <p className="text-xl font-bold text-[hsl(45_90%_52%)]">
-                  KSh {selected.price.toLocaleString()}
-                </p>
-                <p className="text-xs text-[hsl(0_0%_40%)] line-through">
-                  KSh {selected.originalPrice.toLocaleString()}
-                </p>
+                <p className="text-xl font-bold text-[hsl(45_90%_52%)]">KSh {selected.price.toLocaleString()}</p>
+                <p className="text-xs text-[hsl(0_0%_40%)] line-through">KSh {selected.originalPrice.toLocaleString()}</p>
               </div>
             </div>
 
             {/* Meta row */}
             <div className="flex flex-wrap gap-4 text-xs text-[hsl(0_0%_55%)] mb-4">
-              <span className="flex items-center gap-1">
-                <Users size={12} aria-hidden="true" /> {selected.serves}
-              </span>
-              <span className="flex items-center gap-1">
-                <Clock size={12} aria-hidden="true" /> {selected.time}
-              </span>
+              <span className="flex items-center gap-1"><Users size={12} aria-hidden="true" /> {selected.serves}</span>
+              <span className="flex items-center gap-1"><Clock size={12} aria-hidden="true" /> {selected.time}</span>
               <DifficultyDot difficulty={selected.difficulty} />
             </div>
 
-            <p className="text-sm text-[hsl(0_0%_65%)] leading-relaxed mb-5">
-              {selected.description}
-            </p>
+            <p className="text-sm text-[hsl(0_0%_65%)] leading-relaxed mb-5">{selected.description}</p>
 
             {/* Two columns: ingredients + features */}
             <div className="grid grid-cols-2 gap-5 mb-5">
@@ -367,15 +273,8 @@ export default function MealKitsClient() {
                 </h3>
                 <ul className="space-y-1.5">
                   {selected.ingredients.map((ing) => (
-                    <li
-                      key={ing}
-                      className="flex items-start gap-1.5 text-xs text-[hsl(0_0%_60%)]"
-                    >
-                      <Check
-                        size={11}
-                        className="shrink-0 mt-0.5 text-[hsl(45_90%_52%)]"
-                        aria-hidden="true"
-                      />
+                    <li key={ing} className="flex items-start gap-1.5 text-xs text-[hsl(0_0%_60%)]">
+                      <Check size={11} className="shrink-0 mt-0.5 text-[hsl(45_90%_52%)]" aria-hidden="true" />
                       {ing}
                     </li>
                   ))}
@@ -387,15 +286,8 @@ export default function MealKitsClient() {
                 </h3>
                 <ul className="space-y-1.5">
                   {selected.features.map((f) => (
-                    <li
-                      key={f}
-                      className="flex items-start gap-1.5 text-xs text-[hsl(0_0%_60%)]"
-                    >
-                      <Check
-                        size={11}
-                        className="shrink-0 mt-0.5 text-[hsl(45_90%_52%)]"
-                        aria-hidden="true"
-                      />
+                    <li key={f} className="flex items-start gap-1.5 text-xs text-[hsl(0_0%_60%)]">
+                      <Check size={11} className="shrink-0 mt-0.5 text-[hsl(45_90%_52%)]" aria-hidden="true" />
                       {f}
                     </li>
                   ))}
@@ -407,10 +299,7 @@ export default function MealKitsClient() {
             {selected.dietary && selected.dietary.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mb-5">
                 {selected.dietary.map((d) => (
-                  <span
-                    key={d}
-                    className="rounded-full bg-[hsl(142_71%_45%/0.12)] text-[hsl(142_71%_55%)] px-2.5 py-0.5 text-xs font-medium"
-                  >
+                  <span key={d} className="rounded-full bg-[hsl(142_71%_45%/0.12)] text-[hsl(142_71%_55%)] px-2.5 py-0.5 text-xs font-medium">
                     {d}
                   </span>
                 ))}
@@ -422,10 +311,7 @@ export default function MealKitsClient() {
               variant="primary"
               size="lg"
               className="w-full gap-2"
-              onClick={() => {
-                addToCart(selected);
-                setSelected(null);
-              }}
+              onClick={() => { addToCart(selected); setSelected(null) }}
             >
               <ShoppingCart size={18} aria-hidden="true" />
               Add to Cart: KSh {selected.price.toLocaleString()}
@@ -434,5 +320,5 @@ export default function MealKitsClient() {
         )}
       </Modal>
     </section>
-  );
+  )
 }

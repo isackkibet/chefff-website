@@ -1,86 +1,64 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import { type GalleryCategory, type GalleryImage } from "@/lib/data";
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
+import { X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { type GalleryCategory, type GalleryImage } from '@/lib/data'
 
 interface GalleryVideo {
-  publicId: string;
-  url: string;
-  duration: number | null;
+  publicId: string
+  url: string
+  duration: number | null
 }
 
-type Filter = GalleryCategory | "Videos";
+type Filter = GalleryCategory | 'Videos'
 
-const baseCategories: GalleryCategory[] = [
-  "All",
-  "Food",
-  "Events",
-  "Private Dining",
-  "Weddings",
-  "Behind the Scenes",
-  "Chef",
-];
+const baseCategories: GalleryCategory[] = ['All', 'Food', 'Events', 'Private Dining', 'Weddings', 'Behind the Scenes', 'Chef']
 
 export default function GalleryClient({ images }: { images: GalleryImage[] }) {
-  const [videos, setVideos] = useState<GalleryVideo[]>([]);
-  const [activeCategory, setActiveCategory] = useState<Filter>("All");
-  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const [videos, setVideos] = useState<GalleryVideo[]>([])
+  const [activeCategory, setActiveCategory] = useState<Filter>('All')
+  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null)
 
-  const categories: Filter[] =
-    videos.length > 0 ? [...baseCategories, "Videos"] : baseCategories;
+  const categories: Filter[] = videos.length > 0 ? [...baseCategories, 'Videos'] : baseCategories
 
   useEffect(() => {
-    let cancelled = false;
-    fetch("/api/media")
+    let cancelled = false
+    fetch('/api/media')
       .then((res) => (res.ok ? res.json() : []))
-      .then((data) => {
-        if (!cancelled && Array.isArray(data)) setVideos(data);
-      })
-      .catch(() => {});
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+      .then((data) => { if (!cancelled && Array.isArray(data)) setVideos(data) })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [])
 
-  const filtered =
-    activeCategory === "All"
-      ? images
-      : activeCategory === "Videos"
-        ? []
-        : images.filter((img) => img.category === activeCategory);
+  const filtered = activeCategory === 'All'
+    ? images
+    : activeCategory === 'Videos'
+      ? []
+      : images.filter((img) => img.category === activeCategory)
 
   const openLightbox = (idx: number) => {
-    setLightboxIdx(idx);
-    document.body.style.overflow = "hidden";
-  };
+    setLightboxIdx(idx)
+    document.body.style.overflow = 'hidden'
+  }
   const closeLightbox = () => {
-    setLightboxIdx(null);
-    document.body.style.overflow = "";
-  };
-  const prev = () =>
-    setLightboxIdx((i) =>
-      i !== null ? (i - 1 + filtered.length) % filtered.length : null,
-    );
-  const next = () =>
-    setLightboxIdx((i) => (i !== null ? (i + 1) % filtered.length : null));
+    setLightboxIdx(null)
+    document.body.style.overflow = ''
+  }
+  const prev = () => setLightboxIdx((i) => i !== null ? (i - 1 + filtered.length) % filtered.length : null)
+  const next = () => setLightboxIdx((i) => i !== null ? (i + 1) % filtered.length : null)
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowLeft") prev();
-    if (e.key === "ArrowRight") next();
-    if (e.key === "Escape") closeLightbox();
-  };
+    if (e.key === 'ArrowLeft') prev()
+    if (e.key === 'ArrowRight') next()
+    if (e.key === 'Escape') closeLightbox()
+  }
 
   return (
     <section className="pb-24 px-4 sm:px-6 lg:px-8" aria-label="Gallery">
       <div className="mx-auto max-w-7xl">
         {/* Category filter */}
-        <div
-          className="flex flex-wrap gap-2 justify-center mb-10"
-          role="tablist"
-          aria-label="Gallery categories"
-        >
+        <div className="flex flex-wrap gap-2 justify-center mb-10" role="tablist" aria-label="Gallery categories">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -89,8 +67,8 @@ export default function GalleryClient({ images }: { images: GalleryImage[] }) {
               onClick={() => setActiveCategory(cat)}
               className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
                 activeCategory === cat
-                  ? "bg-[hsl(45_90%_52%)] text-[hsl(0_0%_10%)]"
-                  : "bg-[hsl(0_0%_14%)] text-[hsl(0_0%_65%)] hover:bg-[hsl(0_0%_18%)] hover:text-[hsl(42_30%_94%)]"
+                  ? 'bg-[hsl(45_90%_52%)] text-[hsl(0_0%_10%)]'
+                  : 'bg-[hsl(0_0%_14%)] text-[hsl(0_0%_65%)] hover:bg-[hsl(0_0%_18%)] hover:text-[hsl(42_30%_94%)]'
               }`}
             >
               {cat}
@@ -99,10 +77,7 @@ export default function GalleryClient({ images }: { images: GalleryImage[] }) {
         </div>
 
         {/* Full grid */}
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-          role="list"
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" role="list">
           {filtered.map((img, idx) => (
             <button
               key={img.id}
@@ -129,14 +104,9 @@ export default function GalleryClient({ images }: { images: GalleryImage[] }) {
             </button>
           ))}
 
-          {activeCategory === "Videos" ||
-          (activeCategory === "All" && videos.length > 0)
+          {activeCategory === 'Videos' || (activeCategory === 'All' && videos.length > 0)
             ? videos.map((video) => (
-                <div
-                  key={video.publicId}
-                  role="listitem"
-                  className="relative aspect-square w-full overflow-hidden rounded-xl bg-black"
-                >
+                <div key={video.publicId} role="listitem" className="relative aspect-square w-full overflow-hidden rounded-xl bg-black">
                   <video
                     src={video.url}
                     controls
@@ -150,10 +120,8 @@ export default function GalleryClient({ images }: { images: GalleryImage[] }) {
             : null}
         </div>
 
-        {filtered.length === 0 && activeCategory !== "Videos" && (
-          <p className="py-16 text-center text-[hsl(0_0%_45%)]">
-            No photos in this category yet.
-          </p>
+        {filtered.length === 0 && activeCategory !== 'Videos' && (
+          <p className="py-16 text-center text-[hsl(0_0%_45%)]">No photos in this category yet.</p>
         )}
       </div>
 
@@ -197,9 +165,7 @@ export default function GalleryClient({ images }: { images: GalleryImage[] }) {
               priority
             />
             {filtered[lightboxIdx].caption && (
-              <p className="absolute bottom-6 inset-x-0 text-center text-sm text-white/70 px-4">
-                {filtered[lightboxIdx].caption}
-              </p>
+              <p className="absolute bottom-6 inset-x-0 text-center text-sm text-white/70 px-4">{filtered[lightboxIdx].caption}</p>
             )}
           </div>
 
@@ -213,14 +179,11 @@ export default function GalleryClient({ images }: { images: GalleryImage[] }) {
           </button>
 
           {/* Counter */}
-          <p
-            className="absolute bottom-16 left-1/2 -translate-x-1/2 text-sm text-white/50"
-            aria-live="polite"
-          >
+          <p className="absolute bottom-16 left-1/2 -translate-x-1/2 text-sm text-white/50" aria-live="polite">
             {lightboxIdx + 1} / {filtered.length}
           </p>
         </div>
       )}
     </section>
-  );
+  )
 }
