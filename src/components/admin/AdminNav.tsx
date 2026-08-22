@@ -23,6 +23,14 @@ const navItems = [
   { label: 'Settings',     href: '/admin/settings',      Icon: Settings },
 ]
 
+// Primary items always visible in the phone bottom tab bar.
+const bottomItems = [
+  { label: 'Home',   shortLabel: 'Home',   href: '/admin/dashboard',    Icon: LayoutDashboard },
+  { label: 'Bookings',   shortLabel: 'Booking',   href: '/admin/bookings',     Icon: Calendar },
+  { label: 'Messages',   shortLabel: 'Msgs',      href: '/admin/contact',      Icon: Mail },
+  { label: 'Testimonials', shortLabel: 'Reviews', href: '/admin/testimonials', Icon: Star },
+]
+
 export default function AdminNav() {
   const pathname = usePathname()
   const router = useRouter()
@@ -75,7 +83,7 @@ export default function AdminNav() {
       </nav>
 
       {/* Logout */}
-      <div className="px-3 py-4 border-t border-[hsl(0_0%_18%)]">
+      <div className="px-3 py-4 border-t border-[hsl(0_0%_18%)] pb-[calc(1rem+env(safe-area-inset-bottom))]">
         <button
           onClick={handleLogout}
           className="flex w-full items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-[hsl(0_0%_55%)] hover:bg-[hsl(0_72%_51%/0.1)] hover:text-[hsl(0_72%_65%)] transition-colors"
@@ -115,13 +123,53 @@ export default function AdminNav() {
 
       {/* Mobile drawer */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 z-20" aria-modal="true">
+        <div className="lg:hidden fixed inset-0 z-[60]" aria-modal="true">
           <div className="absolute inset-0 bg-black/60" onClick={() => setMobileOpen(false)} aria-hidden="true" />
-          <aside className="absolute top-0 left-0 w-64 h-full bg-[hsl(0_0%_8%)] border-r border-[hsl(0_0%_16%)] flex flex-col">
+          <aside className="absolute top-0 left-0 w-72 max-w-[85vw] h-full bg-[hsl(0_0%_8%)] border-r border-[hsl(0_0%_16%)] flex flex-col">
             <NavContent />
           </aside>
         </div>
       )}
+
+      {/* Mobile bottom tab bar */}
+      <nav
+        className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-[hsl(0_0%_8%/0.97)] backdrop-blur-md border-t border-[hsl(0_0%_16%)] pb-[env(safe-area-inset-bottom)]"
+        aria-label="Admin quick navigation"
+      >
+        <ul className="grid grid-cols-5" role="list">
+          {bottomItems.map(({ shortLabel, href, Icon }) => {
+            const active = pathname.startsWith(href)
+            return (
+              <li key={href}>
+                <Link
+                  href={href}
+                  onClick={() => setMobileOpen(false)}
+                  className={cn(
+                    'flex flex-col items-center gap-1 py-2 text-[10px] font-medium transition-colors',
+                    active
+                      ? 'text-[hsl(45_90%_52%)]'
+                      : 'text-[hsl(0_0%_55%)] hover:text-[hsl(42_30%_94%)]',
+                  )}
+                  aria-current={active ? 'page' : undefined}
+                >
+                  <Icon size={20} aria-hidden="true" />
+                  {shortLabel}
+                </Link>
+              </li>
+            )
+          })}
+          <li>
+            <button
+              onClick={() => setMobileOpen(true)}
+              aria-expanded={mobileOpen}
+              className="w-full flex flex-col items-center gap-1 py-2 text-[10px] font-medium text-[hsl(0_0%_55%)] hover:text-[hsl(42_30%_94%)] transition-colors"
+            >
+              <Menu size={20} aria-hidden="true" />
+              More
+            </button>
+          </li>
+        </ul>
+      </nav>
     </>
   )
 }

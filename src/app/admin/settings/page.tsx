@@ -68,7 +68,7 @@ export default function AdminSettingsPage() {
       <div className="flex min-h-screen">
         <AdminNav />
         <main className="flex-1 pt-14 lg:pt-0 overflow-x-hidden">
-          <div className="p-6 lg:p-8 max-w-3xl mx-auto">
+          <div className="px-4 py-6 pb-28 sm:px-6 lg:p-8 lg:pb-8 max-w-3xl mx-auto">
             <div className="mb-8">
               <h1 className="text-2xl sm:text-3xl font-display font-bold mb-1">Settings</h1>
               <p className="text-sm text-[hsl(0_0%_50%)]">Business configuration and preferences</p>
