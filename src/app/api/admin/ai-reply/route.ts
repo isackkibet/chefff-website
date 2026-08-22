@@ -39,7 +39,11 @@ export async function POST(req: NextRequest) {
     }
 
     const reply = await draftReply({ context, name, subject, message })
-    if (!reply) return NextResponse.json({ error: 'AI provider failed' }, { status: 502 })
+    // Never block the admin: if the AI provider fails or returns empty,
+    // fall back to a sensible template so there is always a draft to send.
+    if (!reply) {
+      return NextResponse.json({ reply: fallbackReply(context, name, subject, message), provider: 'template' })
+    }
 
     return NextResponse.json({ reply, provider: 'ai' })
   } catch (err) {

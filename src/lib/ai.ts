@@ -39,8 +39,9 @@ export async function draftReply(input: ReplyInput): Promise<string | null> {
         model: AI_MODEL,
         temperature: 0.6,
         // Generous cap: reasoning models spend tokens on hidden reasoning
-        // before writing the visible reply.
-        max_tokens: 800,
+        // before writing the visible reply, so short caps can exhaust the
+        // budget mid-reasoning and return an empty message.
+        max_tokens: 4096,
         messages: [
           { role: 'system', content: systemPrompt },
           {

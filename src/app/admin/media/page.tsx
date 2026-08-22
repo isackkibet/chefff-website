@@ -154,7 +154,7 @@ export default function AdminMediaPage() {
         <AdminNav />
         <main className="flex-1 pt-14 lg:pt-0 overflow-x-hidden">
           <div className="px-4 py-6 pb-28 sm:px-6 lg:p-8 lg:pb-8 max-w-7xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
               <div>
                 <h1 className="text-2xl sm:text-3xl font-display font-bold mb-1">Video Library</h1>
                 <p className="text-sm text-[hsl(0_0%_50%)]">{videos.length} videos</p>

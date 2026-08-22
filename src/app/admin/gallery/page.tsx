@@ -87,7 +87,7 @@ export default function AdminGalleryPage() {
         <AdminNav />
         <main className="flex-1 pt-14 lg:pt-0 overflow-x-hidden">
           <div className="px-4 py-6 pb-28 sm:px-6 lg:p-8 lg:pb-8 max-w-7xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
               <div>
                 <h1 className="text-2xl sm:text-3xl font-display font-bold mb-1">Gallery Management</h1>
                 <p className="text-sm text-[hsl(0_0%_50%)]">{images.length} images</p>
@@ -97,25 +97,23 @@ export default function AdminGalleryPage() {
               </Button>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" role="list">
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4" role="list">
               {images.map((img) => (
                 <div key={img.id} role="listitem" className="group relative rounded-2xl overflow-hidden bg-[hsl(0_0%_12%)] border border-[hsl(0_0%_18%)]">
-                  <div className="relative h-44">
-                    <Image src={img.src} alt={img.alt} fill className="object-cover" sizes="300px" />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all flex items-center justify-center">
-                      <button
-                        onClick={() => setDeleteId(img.id)}
-                        className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 rounded-lg bg-[hsl(0_72%_51%)] text-white px-3 py-2 text-xs font-medium hover:bg-[hsl(0_72%_44%)]"
-                        aria-label={`Delete ${img.alt}`}
-                      >
-                        <Trash2 size={12} aria-hidden="true" /> Remove
-                      </button>
-                    </div>
+                  <div className="relative h-36 sm:h-44">
+                    <Image src={img.src} alt={img.alt} fill className="object-cover" sizes="(max-width: 1024px) 50vw, 300px" />
+                    <button
+                      onClick={() => setDeleteId(img.id)}
+                      className="absolute top-2 right-2 z-10 flex items-center justify-center size-8 rounded-lg bg-black/60 text-white hover:bg-[hsl(0_72%_51%)] transition-colors"
+                      aria-label={`Delete ${img.alt}`}
+                    >
+                      <Trash2 size={14} aria-hidden="true" />
+                    </button>
                   </div>
                   <div className="p-3">
                     <div className="flex items-start justify-between gap-2 mb-1">
-                      {img.caption && <p className="text-xs font-medium text-[hsl(42_30%_94%)] leading-snug truncate">{img.caption}</p>}
-                      <Badge variant="muted">{img.category}</Badge>
+                      {img.caption && <p className="text-xs font-medium text-[hsl(42_30%_94%)] leading-snug truncate min-w-0">{img.caption}</p>}
+                      <Badge variant="muted" className="shrink-0 max-w-[75%] truncate">{img.category}</Badge>
                     </div>
                     <p className="text-xs text-[hsl(0_0%_40%)] truncate">{img.alt}</p>
                   </div>
