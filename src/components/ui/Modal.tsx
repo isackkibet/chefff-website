@@ -44,19 +44,21 @@ export default function Modal({ open, onClose, children, className, 'aria-label'
       aria-label={ariaLabel}
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
       className={cn(
-        'fixed inset-0 z-50 m-auto w-[calc(100%-1.5rem)] sm:w-full max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl bg-[hsl(0_0%_12%)] border border-[hsl(0_0%_22%)] p-4 sm:p-6 shadow-2xl backdrop:bg-black/70 backdrop:backdrop-blur-sm',
+        'fixed inset-0 z-50 m-auto w-[calc(100%-1.5rem)] sm:w-full max-h-[calc(100dvh-2rem)] overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-[hsl(0_0%_22%)] shadow-2xl backdrop:bg-black/70 backdrop:backdrop-blur-sm',
         'open:animate-scale-in',
         className,
       )}
     >
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 rounded-full p-1.5 text-[hsl(0_0%_55%)] hover:bg-[hsl(0_0%_100%/0.08)] hover:text-[hsl(42_30%_94%)] transition-colors"
+        className="absolute top-3 right-3 z-10 rounded-full p-1.5 bg-[hsl(0_0%_18%/0.9)] text-[hsl(0_0%_65%)] hover:bg-[hsl(0_0%_25%)] hover:text-[hsl(42_30%_94%)] transition-colors"
         aria-label="Close"
       >
         <X size={20} />
       </button>
-      {children}
+      <div className="max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain p-4 pt-12 sm:p-6 sm:pt-14">
+        {children}
+      </div>
     </dialog>
   )
 }
