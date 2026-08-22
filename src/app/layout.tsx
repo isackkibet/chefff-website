@@ -6,6 +6,7 @@ import WhatsAppButton from '@/components/layout/WhatsAppButton'
 import ToastProvider from '@/components/ui/ToastProvider'
 import CartProvider from '@/lib/cart'
 import CartDrawer from '@/components/cart/CartDrawer'
+import SiteChrome from '@/components/layout/SiteChrome'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://chefharrizona.co.ke'),
@@ -50,13 +51,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen flex flex-col">
         <ToastProvider>
           <CartProvider>
-            <Navbar />
+            <SiteChrome>
+              <Navbar />
+            </SiteChrome>
             <main id="main-content" className="flex-1">
               {children}
             </main>
-            <Footer />
-            <WhatsAppButton />
-            <CartDrawer />
+            <SiteChrome>
+              <Footer />
+              <WhatsAppButton />
+              <CartDrawer />
+            </SiteChrome>
           </CartProvider>
         </ToastProvider>
       </body>

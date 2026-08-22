@@ -44,7 +44,7 @@ export default function Modal({ open, onClose, children, className, 'aria-label'
       aria-label={ariaLabel}
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
       className={cn(
-        'fixed inset-0 z-50 m-auto w-full max-w-2xl rounded-2xl bg-[hsl(0_0%_12%)] border border-[hsl(0_0%_22%)] p-6 shadow-2xl backdrop:bg-black/70 backdrop:backdrop-blur-sm',
+        'fixed inset-0 z-50 m-auto w-[calc(100%-1.5rem)] sm:w-full max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl bg-[hsl(0_0%_12%)] border border-[hsl(0_0%_22%)] p-4 sm:p-6 shadow-2xl backdrop:bg-black/70 backdrop:backdrop-blur-sm',
         'open:animate-scale-in',
         className,
       )}
